@@ -116,8 +116,6 @@ install -d $RPM_BUILD_ROOT%{_includedir}
 
 find doc -name Dependencies -o -name Makefile\* | xargs rm -f
 
-gzip -9nf COPYING README.txt release_docs/{HISTORY.txt,RELEASE.txt}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 

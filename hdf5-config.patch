@@ -1,0 +1,11 @@
+--- hdf5-1.4.2/c++/config/commence.in.orig	Thu Apr 12 21:42:26 2001
++++ hdf5-1.4.2/c++/config/commence.in	Mon Oct 15 12:30:53 2001
+@@ -44,7 +44,7 @@
+ DYNAMIC_DIRS=@DYNAMIC_DIRS@
+ LT=$(top_builddir)/libtool
+ LT_COMPILE=$(LT) --mode=compile $(CXX)
+-LT_LINK_LIB=$(LT) --mode=link $(CXX) -static -rpath $(libdir) $(DYNAMIC_DIRS)
++LT_LINK_LIB=$(LT) --mode=link $(CXX) -rpath $(libdir) $(DYNAMIC_DIRS)
+ LT_LINK_EXE=$(LT) --mode=link $(CXX) $(LT_STATIC_EXEC) -dlopen self -static -rpath $(bindir) $(DYNAMIC_DIRS)
+ LT_RUN=$(LT) --mode=execute
+ LT_INSTALL_PROG=$(LT) --mode=install $(INSTALL_PROGRAM)

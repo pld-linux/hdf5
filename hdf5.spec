@@ -14,7 +14,7 @@ Group(pt_BR):	Bibliotecas
 Group(ru):	Библиотеки
 Group(uk):	Б╕бл╕отеки
 License:	Nearly BSD, but changed sources must be marked
-Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{_ver}-%{_patch}.tar.gz
+Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{_ver}-%{_patch}/src/%{name}-%{_ver}-%{_patch}.tar.gz
 Patch0:		%{name}-config.patch
 URL:		http://hdf.ncsa.uiuc.edu/
 BuildRequires:	zlib-devel >= 1.1.3

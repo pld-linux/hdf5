@@ -12,14 +12,14 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-hdf4link.patch
 Patch2:		%{name}-acfix.patch
 URL:		http://hdf.ncsa.uiuc.edu/
-BuildRequires:	zlib-devel >= 1.1.3
-BuildRequires:	openssl-devel
-BuildRequires:	libstdc++-devel
-BuildRequires:	libjpeg-devel >= 6b
-BuildRequires:	hdf-devel >= 4.0
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	hdf-devel >= 4.0
+BuildRequires:	libjpeg-devel >= 6b
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
+BuildRequires:	openssl-devel
+BuildRequires:	zlib-devel >= 1.1.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -94,7 +94,7 @@ HDF 4.x.
 
 %build
 %{__libtoolize}
-aclocal
+%{__aclocal}
 %{__autoconf}
 (cd c++ ; aclocal ; autoconf)
 %configure \
@@ -126,7 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz release_docs/*.gz
+%doc COPYING README.txt release_docs/{HISTORY.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel

@@ -10,6 +10,7 @@ Release:	0.1
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{version}.tar.gz
+# Source0-md5:	573b9001b00c3ba78f681babd4fe7520
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-ac.patch
 URL:		http://hdf.ncsa.uiuc.edu/HDF5/

@@ -95,7 +95,7 @@ HDF 4.x.
 %build
 libtoolize --copy --force
 aclocal
-autoconf
+%{__autoconf}
 (cd c++ ; aclocal ; autoconf)
 %configure \
 	--enable-cxx \

@@ -5,12 +5,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.6.1
-Release:	0.2
+Version:	1.6.2
+Release:	0.1
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{version}.tar.gz
-# Source0-md5:	db1ea5374572412b6e75f7916effe064
+# Source0-md5:	9a39a0d8b002b12787436e186133455c
 Patch0:		%{name}-config.patch
 URL:		http://hdf.ncsa.uiuc.edu/HDF5/
 BuildRequires:	autoconf
@@ -40,7 +40,7 @@ wspó³czesnych systemów i aplikacji.
 Summary:	HDF5 library development package
 Summary(pl):	Pliki nag³ówkowe biblioteki HDF5
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	openssl-devel
 Requires:	zlib-devel
 
@@ -54,7 +54,7 @@ Pliki nag³ówkowe biblioteki HDF5 oraz dokumentacja HDF5.
 Summary:	HDF5 static library
 Summary(pl):	Statyczna biblioteka HDF5
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static version of HDF5 library.
@@ -66,7 +66,7 @@ Statyczna wersja biblioteki HDF5.
 Summary:	HDF5 utilities
 Summary(pl):	Narzêdzia do plików HDF5
 Group:		Applications/File
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description progs
 Utilities to convert from/to HDF5 format.

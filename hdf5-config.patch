@@ -69,3 +69,30 @@
                  ;;
          esac
  	PROD_CPPFLAGS=
+@@ -129,7 +129,7 @@
+ 	CFLAGS="$CFLAGS -Wno-long-long"
+ 
+         # Append warning flags from gcc-3* case
+-	CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
++	CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute"
+ 
+         # Append warning flags from gcc-3.2* case
+ 	CFLAGS="$CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization"
+@@ -154,7 +154,7 @@
+ 	CFLAGS="$CFLAGS -Wno-long-long"
+ 
+         # Append warning flags from gcc-3* case
+-	CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
++	CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute"
+ 
+         # Append more extra warning flags that only gcc3.2+ know about
+ 	CFLAGS="$CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization"
+@@ -176,7 +176,7 @@
+ 	CFLAGS="$CFLAGS -Wno-long-long"
+ 
+         # Append some extra warning flags that only gcc3+ know about
+-	CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
++	CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute"
+ 
+ 	# Flags are set
+ 	cc_flags_set=yes

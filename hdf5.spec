@@ -2,7 +2,7 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.4.4
-Release:	2
+Release:	3
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{version}.tar.gz
@@ -75,7 +75,10 @@ Narzêdzia do konwersji z i to formatu HDF5.
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
-(cd c++ ; aclocal ; autoconf)
+cd c++
+%{__aclocal}
+%{__autoconf}
+cd ..
 %configure \
 	--enable-cxx
 
@@ -109,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/html
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/lib*.la
 %{_includedir}/*
 
 %files static

@@ -5,7 +5,62 @@
  LT=$(top_builddir)/libtool
  LT_COMPILE=$(LT) --mode=compile $(CXX)
 -LT_LINK_LIB=$(LT) --mode=link $(CXX) -static -rpath $(libdir) $(DYNAMIC_DIRS)
+-LT_LINK_EXE=$(LT) --mode=link $(CXX) $(LT_STATIC_EXEC) -dlopen self -static -rpath $(bindir) $(DYNAMIC_DIRS)
 +LT_LINK_LIB=$(LT) --mode=link $(CXX) -rpath $(libdir) $(DYNAMIC_DIRS)
- LT_LINK_EXE=$(LT) --mode=link $(CXX) $(LT_STATIC_EXEC) -dlopen self -static -rpath $(bindir) $(DYNAMIC_DIRS)
++LT_LINK_EXE=$(LT) --mode=link $(CXX) $(LT_STATIC_EXEC) -dlopen self -rpath $(bindir) $(DYNAMIC_DIRS)
  LT_RUN=$(LT) --mode=execute
  LT_INSTALL_PROG=$(LT) --mode=install $(INSTALL_PROGRAM)
+--- hdf5-1.4.4/config/gnu-flags.orig	Sat May 11 00:22:18 2002
++++ hdf5-1.4.4/config/gnu-flags	Sat Oct  5 15:25:14 2002
+@@ -75,42 +75,6 @@
+     sleep 5
+ fi
+ 
+-# Architecture-specific flags
+-case "$host_os-$host_cpu" in
+-    # FreeBSD sets the information from "hostname -m" to the general machine
+-    # architecture, not the specific CPU for the machine, so even our
+-    # Pentium II Xeon server is set to "i386".  Once we know we are on a FreeBSD
+-    # machine, use the "sysctl" command to get the CPU hardware model.
+-    freebsd*)
+-        host_cpu_model=`sysctl -n hw.model`
+-        case "$host_cpu_model" in
+-            # Hmm.. this might not catch Celerons, but it won't hurt them either...
+-            *Pro*|*II*)
+-                # This check should be kept in sync with the *-i686 check below
+-                case "$cc_vendor-$cc_version" in
+-                    gcc-2.95*|gcc-3*)
+-                        ARCH=${ARCH:="-march=i686"}
+-                        ;;
+-                    gcc-*|egcs-*|pgcc-*)
+-                        ARCH=${ARCH:="-mcpu=pentiumpro -march=pentiumpro"}
+-                        ;;
+-                esac
+-            ;;
+-        esac
+-        ;;
+-
+-    *-i686)
+-        case "$cc_vendor-$cc_version" in
+-            gcc-2.9[56]*|gcc-3*)
+-                ARCH=${ARCH:="-march=i686"}
+-                ;;
+-            gcc-*|egcs-*|pgcc-*)
+-                ARCH=${ARCH:="-mcpu=pentiumpro -march=pentiumpro"}
+-                ;;
+-        esac
+-        ;;
+-esac
+-
+ # Host-specific flags
+ case "`hostname`" in
+     sleipnir.ncsa.uiuc.edu)
+@@ -144,7 +144,7 @@
+ 	cc_flags_set=yes
+ 	;;
+ 
+-    gcc-3.1*)
++    gcc-3.[12]*)
+         # Replace -ansi flag with -std=c99 flag
+ 	CFLAGS="`echo $CFLAGS | sed -e 's/-ansi/-std=c99/g'`"
+ 

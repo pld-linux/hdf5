@@ -2,15 +2,14 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.4.4
-Release:	1
+Release:	2
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{version}.tar.gz
 Patch0:		%{name}-config.patch
-URL:		http://hdf.ncsa.uiuc.edu/
+URL:		http://hdf.ncsa.uiuc.edu/HDF5/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	hdf-devel >= 4.0
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
@@ -68,20 +67,6 @@ Utilities to convert from/to HDF5 format.
 %description progs -l pl
 Narzêdzia do konwersji z i to formatu HDF5.
 
-#%package hdf4
-#Summary:	HDF 4.x to/from HDF5 conversion tools
-#Summary(pl):	Narzêdzia do konwersji pomiêdzy HDF 4.x i HDF5
-#Group:		Applications/File
-#Requires:	%{name} = %{version}
-#
-#%description hdf4
-#Utilities to convert files from HDF 4.x to HDF5 or from HDF5 to HDF
-#4.x format.
-#
-#%description hdf4 -l pl
-#Narzêdzia do konwersji plików z formatu HDF 4.x do HDF5 oraz z HDF5 do
-#HDF 4.x.
-
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1
@@ -124,7 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/html
 %attr(755,root,root) %{_libdir}/lib*.so
-%attr(755,root,root) %{_libdir}/lib*.la
+%{_libdir}/lib*.la
 %{_includedir}/*
 
 %files static
@@ -133,15 +118,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gif2h5
-%attr(755,root,root) %{_bindir}/h52gif
-%attr(755,root,root) %{_bindir}/h5debug
-%attr(755,root,root) %{_bindir}/h5dump
-%attr(755,root,root) %{_bindir}/h5import
-%attr(755,root,root) %{_bindir}/h5ls
-%attr(755,root,root) %{_bindir}/h5repart
-
-#%files hdf4
-#%defattr(644,root,root,755)
-#%attr(755,root,root) %{_bindir}/h4toh5
-#%attr(755,root,root) %{_bindir}/h5toh4
+%attr(755,root,root) %{_bindir}/*

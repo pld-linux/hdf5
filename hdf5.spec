@@ -4,7 +4,7 @@ Name:		hdf5
 %define	_ver	1.4.2
 %define _patch	patch1
 Version:	%{_ver}%{_patch}
-Release:	1
+Release:	2
 Group:		Libraries
 Group(de):	Libraries
 Group(es):	Bibliotecas
@@ -16,12 +16,17 @@ Group(uk):	â¦ÂÌ¦ÏÔÅËÉ
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{_ver}-%{_patch}/src/%{name}-%{_ver}-%{_patch}.tar.gz
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-hdf4link.patch
+Patch2:		%{name}-acfix.patch
 URL:		http://hdf.ncsa.uiuc.edu/
 BuildRequires:	zlib-devel >= 1.1.3
 BuildRequires:	openssl-devel
 BuildRequires:	libstdc++-devel
-#BuildRequires:	libjpeg-devel >= 6b
-#BuildRequires:	hdf-devel
+BuildRequires:	libjpeg-devel >= 6b
+BuildRequires:	hdf-devel >= 4.0
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,10 +57,10 @@ Group(uk):	òÏÚÒÏÂËÁ/â¦ÂÌ¦ÏÔÅËÉ
 Requires:	%{name} = %{version}
 
 %description devel
-Header files for HDF5 library.
+Header files for HDF5 library and HDF5 documentation.
 
 %description devel -l pl
-Pliki nag³ówkowe biblioteki HDF5.
+Pliki nag³ówkowe biblioteki HDF5 oraz dokumentacja HDF5.
 
 %package static
 Summary:	HDF5 static library
@@ -90,13 +95,36 @@ Utilities to convert from/to HDF5 format.
 %description progs -l pl
 Narzêdzia do konwersji z i to formatu HDF5.
 
+%package hdf4
+Summary:	HDF 4.x to/from HDF5 conversion tools
+Summary(pl):	Narzêdzia do konwersji pomiêdzy HDF 4.x i HDF5
+Group:		Applications/File
+Group(de):	Applikationen/Datei
+Group(pl):	Aplikacje/Pliki
+Requires:	%{name} = %{version}
+
+%description hdf4
+Utilities to convert files from HDF 4.x to HDF5 or from HDF5 to HDF
+4.x format.
+
+%description hdf4 -l pl
+Narzêdzia do konwersji plików z formatu HDF 4.x do HDF5 oraz z HDF5 do
+HDF 4.x.
+
 %prep
 %setup -q -n %{name}-%{_ver}-%{_patch}
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
-%configure2_13 \
-	--enable-cxx
+libtoolize --copy --force
+aclocal
+autoconf
+(cd c++ ; aclocal ; autoconf)
+%configure \
+	--enable-cxx \
+	--with-hdf4=/usr/include/hdf
 
 #	--enable-fortran  - requires Fortran90 compiler
 
@@ -123,11 +151,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz release_notes/*.gz doc/html
+%doc *.gz release_docs/*.gz
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
 %defattr(644,root,root,755)
+%doc doc/html
 %attr(755,root,root) %{_libdir}/lib*.so
 %attr(755,root,root) %{_libdir}/lib*.la
 %{_includedir}/*
@@ -138,4 +167,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/gif2h5
+%attr(755,root,root) %{_bindir}/h52gif
+%attr(755,root,root) %{_bindir}/h5debug
+%attr(755,root,root) %{_bindir}/h5dump
+%attr(755,root,root) %{_bindir}/h5import
+%attr(755,root,root) %{_bindir}/h5ls
+%attr(755,root,root) %{_bindir}/h5repart
+
+%files hdf4
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/h4toh5
+%attr(755,root,root) %{_bindir}/h5toh4

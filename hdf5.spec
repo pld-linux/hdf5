@@ -1,18 +1,17 @@
 # TODO:
 # - build with MPICH
-# - enable Stream VFS support
+# - enable Stream VFD support
 # - check missing file
 Summary:	Hierarchical Data Format 5 library
 Summary(pl):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.4.5
+Version:	1.6.0
 Release:	0.1
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{version}.tar.gz
-# Source0-md5:	573b9001b00c3ba78f681babd4fe7520
+# Source0-md5:	6002dd2774931ec8c429671cb416d26e
 Patch0:		%{name}-config.patch
-Patch1:		%{name}-ac.patch
 URL:		http://hdf.ncsa.uiuc.edu/HDF5/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -42,6 +41,8 @@ Summary:	HDF5 library development package
 Summary(pl):	Pliki nag³ówkowe biblioteki HDF5
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
+Requires:	openssl-devel
+Requires:	zlib-devel
 
 %description devel
 Header files for HDF5 library and HDF5 documentation.
@@ -76,7 +77,6 @@ Narzêdzia do konwersji z i to formatu HDF5.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1 -b .wiget
 
 %build
 %{__libtoolize}
@@ -105,9 +105,14 @@ install -d $RPM_BUILD_ROOT%{_includedir}
 %{__make} install \
 	libdir=$RPM_BUILD_ROOT%{_libdir} \
 	includedir=$RPM_BUILD_ROOT%{_includedir} \
-	bindir=$RPM_BUILD_ROOT%{_bindir}
+	bindir=$RPM_BUILD_ROOT%{_bindir} \
+	docdir=$RPM_BUILD_ROOT%{_docdir}
 
 find doc -name Dependencies -o -name Makefile\* | xargs rm -f
+
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+mv -f $RPM_BUILD_ROOT%{_docdir}/hdf5/examples/{c,c++} \
+	$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -128,6 +133,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_includedir}/*
+%{_examplesdir}/%{name}-%{version}
 
 %files static
 %defattr(644,root,root,755)

@@ -1,18 +1,34 @@
---- hdf5-1.4.2/c++/config/commence.in.orig	Thu Apr 12 21:42:26 2001
-+++ hdf5-1.4.2/c++/config/commence.in	Mon Oct 15 12:30:53 2001
-@@ -44,7 +44,7 @@
+--- hdf5-1.6.0/config/commence.in.orig	2003-07-03 19:23:35.000000000 +0200
++++ hdf5-1.6.0/config/commence.in	2003-07-19 14:00:59.000000000 +0200
+@@ -51,7 +51,7 @@
+ LT_LINK_EXE=$(LT) --mode=link $(CC) $(LT_STATIC_EXEC) -dlopen self -rpath $(libdir) $(DYNAMIC_DIRS)
+ LT_RUN=$(LT) --mode=execute
+ LT_INSTALL_PROG=$(LT) --mode=install $(INSTALL_PROGRAM)
+-LT_INSTALL_LIB=$(LT) --mode=install $(INSTALL_DATA)
++LT_INSTALL_LIB=$(LT) --mode=install $(INSTALL_PROGRAM)
+ LT_UNINSTALL=$(LT) --mode=uninstall $(RM)
+ 
+ ## Optional variables. We must declare them here because Irix pmake
+--- hdf5-1.6.0/c++/config/commence.in.orig	2003-06-30 17:19:35.000000000 +0200
++++ hdf5-1.6.0/c++/config/commence.in	2003-07-19 14:01:16.000000000 +0200
+@@ -50,11 +50,11 @@
  DYNAMIC_DIRS=@DYNAMIC_DIRS@
  LT=$(top_builddir)/libtool
  LT_COMPILE=$(LT) --mode=compile $(CXX)
 -LT_LINK_LIB=$(LT) --mode=link $(CXX) -static -rpath $(libdir) $(DYNAMIC_DIRS)
--LT_LINK_EXE=$(LT) --mode=link $(CXX) $(LT_STATIC_EXEC) -dlopen self -static -rpath $(bindir) $(DYNAMIC_DIRS)
+-LT_LINK_EXE=$(LT) --mode=link $(CXX) -static $(LT_STATIC_EXEC) -dlopen self -rpath $(bindir) $(DYNAMIC_DIRS)
 +LT_LINK_LIB=$(LT) --mode=link $(CXX) -rpath $(libdir) $(DYNAMIC_DIRS)
 +LT_LINK_EXE=$(LT) --mode=link $(CXX) $(LT_STATIC_EXEC) -dlopen self -rpath $(bindir) $(DYNAMIC_DIRS)
  LT_RUN=$(LT) --mode=execute
  LT_INSTALL_PROG=$(LT) --mode=install $(INSTALL_PROGRAM)
---- hdf5-1.4.4/config/gnu-flags.orig	Sat May 11 00:22:18 2002
-+++ hdf5-1.4.4/config/gnu-flags	Sat Oct  5 15:25:14 2002
-@@ -75,42 +75,6 @@
+-LT_INSTALL_LIB=$(LT) --mode=install $(INSTALL_DATA)
++LT_INSTALL_LIB=$(LT) --mode=install $(INSTALL_PROGRAM)
+ LT_UNINSTALL=$(LT) --mode=uninstall $(RM)
+ 
+ ## Optional variables. We must declare them here because Irix pmake
+--- hdf5-1.6.0/config/gnu-flags.orig	Sat May 11 00:22:18 2002
++++ hdf5-1.6.0/config/gnu-flags	Sat Oct  5 15:25:14 2002
+@@ -75,27 +75,6 @@
      sleep 5
  fi
  
@@ -26,32 +42,30 @@
 -        host_cpu_model=`sysctl -n hw.model`
 -        case "$host_cpu_model" in
 -            # Hmm.. this might not catch Celerons, but it won't hurt them either...
--            *Pro*|*II*)
--                # This check should be kept in sync with the *-i686 check below
--                case "$cc_vendor-$cc_version" in
--                    gcc-2.95*|gcc-3*)
--                        ARCH=${ARCH:="-march=i686"}
--                        ;;
--                    gcc-*|egcs-*|pgcc-*)
--                        ARCH=${ARCH:="-mcpu=pentiumpro -march=pentiumpro"}
--                        ;;
--                esac
+-            *Pro*|*II*|*III*|*IV*|*Athlon*)
+-                ARCH=${ARCH:="-march=i686"}
 -            ;;
 -        esac
 -        ;;
 -
 -    *-i686)
--        case "$cc_vendor-$cc_version" in
--            gcc-2.9[56]*|gcc-3*)
--                ARCH=${ARCH:="-march=i686"}
--                ;;
--            gcc-*|egcs-*|pgcc-*)
--                ARCH=${ARCH:="-mcpu=pentiumpro -march=pentiumpro"}
--                ;;
--        esac
+-        ARCH=${ARCH:="-march=i686"}
 -        ;;
 -esac
 -
  # Host-specific flags
  case "`hostname`" in
      sleipnir.ncsa.uiuc.edu)
+@@ -97,10 +97,10 @@
+ 	# Production
+         case "$cc_vendor-$cc_version" in
+             gcc-2.95.[34]|gcc-3*)
+-                PROD_CFLAGS="-O3 $NOFP"
++                PROD_CFLAGS="$NOFP"
+                 ;;
+             *)
+-                PROD_CFLAGS="-O $NOFP -finline-functions"
++                PROD_CFLAGS="$NOFP -finline-functions"
+                 ;;
+         esac
+ 	PROD_CPPFLAGS=

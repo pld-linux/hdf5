@@ -55,12 +55,3 @@
  # Host-specific flags
  case "`hostname`" in
      sleipnir.ncsa.uiuc.edu)
-@@ -144,7 +144,7 @@
- 	cc_flags_set=yes
- 	;;
- 
--    gcc-3.1*)
-+    gcc-3.[12]*)
-         # Replace -ansi flag with -std=c99 flag
- 	CFLAGS="`echo $CFLAGS | sed -e 's/-ansi/-std=c99/g'`"
- 

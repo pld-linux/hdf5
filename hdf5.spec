@@ -1,12 +1,17 @@
+# TODO:
+# - build with MPICH
+# - enable Stream VFS support
+# - check missing file
 Summary:	Hierarchical Data Format 5 library
 Summary(pl):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.4.4
-Release:	3
+Version:	1.4.5
+Release:	0.1
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{version}.tar.gz
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-ac.patch
 URL:		http://hdf.ncsa.uiuc.edu/HDF5/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -70,6 +75,7 @@ Narzêdzia do konwersji z i to formatu HDF5.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1
+%patch1 -p1 -b .wiget
 
 %build
 %{__libtoolize}
@@ -80,7 +86,12 @@ cd c++
 %{__autoconf}
 cd ..
 %configure \
-	--enable-cxx
+	--enable-cxx \
+	--enable-linux-lfs \
+	--enable-threadsafe \
+	--enable-production \
+	--with-pthread \
+	--with-ssl
 
 #	--enable-fortran  - requires Fortran90 compiler
 
@@ -107,6 +118,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README.txt release_docs/{HISTORY.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
+#check this
+#%{_libdir}/libhdf5.settings
 
 %files devel
 %defattr(644,root,root,755)

@@ -1,16 +1,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-%define	_ver	1.4.2
-%define _patch	patch1
-Version:	%{_ver}%{_patch}
-Release:	2
+Version:	1.4.4
+Release:	1
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
-Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{_ver}-%{_patch}/src/%{name}-%{_ver}-%{_patch}.tar.gz
+Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{version}.tar.gz
 Patch0:		%{name}-config.patch
-Patch1:		%{name}-hdf4link.patch
-Patch2:		%{name}-acfix.patch
 URL:		http://hdf.ncsa.uiuc.edu/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -72,25 +68,23 @@ Utilities to convert from/to HDF5 format.
 %description progs -l pl
 Narzêdzia do konwersji z i to formatu HDF5.
 
-%package hdf4
-Summary:	HDF 4.x to/from HDF5 conversion tools
-Summary(pl):	Narzêdzia do konwersji pomiêdzy HDF 4.x i HDF5
-Group:		Applications/File
-Requires:	%{name} = %{version}
-
-%description hdf4
-Utilities to convert files from HDF 4.x to HDF5 or from HDF5 to HDF
-4.x format.
-
-%description hdf4 -l pl
-Narzêdzia do konwersji plików z formatu HDF 4.x do HDF5 oraz z HDF5 do
-HDF 4.x.
+#%package hdf4
+#Summary:	HDF 4.x to/from HDF5 conversion tools
+#Summary(pl):	Narzêdzia do konwersji pomiêdzy HDF 4.x i HDF5
+#Group:		Applications/File
+#Requires:	%{name} = %{version}
+#
+#%description hdf4
+#Utilities to convert files from HDF 4.x to HDF5 or from HDF5 to HDF
+#4.x format.
+#
+#%description hdf4 -l pl
+#Narzêdzia do konwersji plików z formatu HDF 4.x do HDF5 oraz z HDF5 do
+#HDF 4.x.
 
 %prep
-%setup -q -n %{name}-%{_ver}-%{_patch}
+%setup -q -n %{name}-%{version}
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %{__libtoolize}
@@ -98,8 +92,7 @@ HDF 4.x.
 %{__autoconf}
 (cd c++ ; aclocal ; autoconf)
 %configure \
-	--enable-cxx \
-	--with-hdf4=/usr/include/hdf
+	--enable-cxx
 
 #	--enable-fortran  - requires Fortran90 compiler
 
@@ -148,7 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/h5ls
 %attr(755,root,root) %{_bindir}/h5repart
 
-%files hdf4
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/h4toh5
-%attr(755,root,root) %{_bindir}/h5toh4
+#%files hdf4
+#%defattr(644,root,root,755)
+#%attr(755,root,root) %{_bindir}/h4toh5
+#%attr(755,root,root) %{_bindir}/h5toh4

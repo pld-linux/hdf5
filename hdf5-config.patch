@@ -26,10 +26,10 @@
  LT_UNINSTALL=$(LT) --mode=uninstall $(RM)
  
  ## Optional variables. We must declare them here because Irix pmake
---- hdf5-1.6.0/config/gnu-flags.orig	Sat May 11 00:22:18 2002
-+++ hdf5-1.6.0/config/gnu-flags	Sat Oct  5 15:25:14 2002
-@@ -75,27 +75,6 @@
-     sleep 5
+--- hdf5-1.6.2/config/gnu-flags.orig	2004-01-28 01:26:17.000000000 +0100
++++ hdf5-1.6.2/config/gnu-flags	2004-03-06 17:40:53.557597768 +0100
+@@ -89,27 +89,6 @@
+ 
  fi
  
 -# Architecture-specific flags
@@ -56,10 +56,24 @@
  # Host-specific flags
  case "`hostname`" in
      sleipnir.ncsa.uiuc.edu)
-@@ -97,10 +97,10 @@
+@@ -131,7 +110,7 @@
  	# Production
          case "$cc_vendor-$cc_version" in
-             gcc-2.95.[34]|gcc-3*)
+             gcc-2.95.[34])
+-                PROD_CFLAGS="-O3 $NOFP"
++                PROD_CFLAGS="$NOFP"
+                 ;;
+             gcc-3.[0-4]*)
+                 # The optimization level is reduced for gcc 3.* due to problems
+@@ -140,14 +119,14 @@
+                 # failures for various integer types -> long long conversions in the
+                 # test/dtypes test).  Perhaps later versions of gcc will fix this
+                 # bug... - QAK - 2003/10/20
+-                PROD_CFLAGS="-O $NOFP"
++                PROD_CFLAGS="$NOFP"
+                 ;;
+             gcc-3*)
+                 # Be optimistic about future versions of gcc.. :-) - QAK - 2003/10/20
 -                PROD_CFLAGS="-O3 $NOFP"
 +                PROD_CFLAGS="$NOFP"
                  ;;
@@ -69,7 +83,7 @@
                  ;;
          esac
  	PROD_CPPFLAGS=
-@@ -129,7 +129,7 @@
+@@ -176,7 +155,7 @@
  	CFLAGS="$CFLAGS -Wno-long-long"
  
          # Append warning flags from gcc-3* case
@@ -78,7 +92,7 @@
  
          # Append warning flags from gcc-3.2* case
  	CFLAGS="$CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization"
-@@ -154,7 +154,7 @@
+@@ -201,7 +180,7 @@
  	CFLAGS="$CFLAGS -Wno-long-long"
  
          # Append warning flags from gcc-3* case
@@ -87,7 +101,7 @@
  
          # Append more extra warning flags that only gcc3.2+ know about
  	CFLAGS="$CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization"
-@@ -176,7 +176,7 @@
+@@ -223,7 +202,7 @@
  	CFLAGS="$CFLAGS -Wno-long-long"
  
          # Append some extra warning flags that only gcc3+ know about

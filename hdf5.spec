@@ -6,13 +6,6 @@ Name:		hdf5
 Version:	%{_ver}%{_patch}
 Release:	2
 Group:		Libraries
-Group(de):	Libraries
-Group(es):	Bibliotecas
-Group(fr):	Librairies
-Group(pl):	Biblioteki
-Group(pt_BR):	Bibliotecas
-Group(ru):	Библиотеки
-Group(uk):	Б╕бл╕отеки
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{_ver}-%{_patch}/src/%{name}-%{_ver}-%{_patch}.tar.gz
 Patch0:		%{name}-config.patch
@@ -47,13 +40,6 @@ wspСЁczesnych systemСw i aplikacji.
 Summary:	HDF5 library development package
 Summary(pl):	Pliki nagЁСwkowe biblioteki HDF5
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 
 %description devel
@@ -66,13 +52,6 @@ Pliki nagЁСwkowe biblioteki HDF5 oraz dokumentacja HDF5.
 Summary:	HDF5 static library
 Summary(pl):	Statyczna biblioteka HDF5
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -85,8 +64,6 @@ Statyczna wersja biblioteki HDF5.
 Summary:	HDF5 utilities
 Summary(pl):	NarzЙdzia do plikСw HDF5
 Group:		Applications/File
-Group(de):	Applikationen/Datei
-Group(pl):	Aplikacje/Pliki
 Requires:	%{name} = %{version}
 
 %description progs
@@ -99,8 +76,6 @@ NarzЙdzia do konwersji z i to formatu HDF5.
 Summary:	HDF 4.x to/from HDF5 conversion tools
 Summary(pl):	NarzЙdzia do konwersji pomiЙdzy HDF 4.x i HDF5
 Group:		Applications/File
-Group(de):	Applikationen/Datei
-Group(pl):	Aplikacje/Pliki
 Requires:	%{name} = %{version}
 
 %description hdf4

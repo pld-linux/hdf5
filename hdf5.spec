@@ -18,7 +18,7 @@ BuildRequires:	automake
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
-BuildRequires:	openssl-devel >= 0.9.6k
+BuildRequires:	openssl-devel >= 0.9.6m
 BuildRequires:	zlib-devel >= 1.1.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 

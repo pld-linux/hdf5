@@ -74,7 +74,7 @@ Utilities to convert from/to HDF5 format.
 Narzêdzia do konwersji z i to formatu HDF5.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch0 -p1
 %patch1 -p1 -b .wiget
 

@@ -9,12 +9,13 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.6.4
-Release:	1
+Release:	2
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
 Source0:	ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/%{name}-%{version}/src/%{name}-%{version}.tar.gz
 # Source0-md5:	837de4bb977623e380d3501ab2791f02
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-sig.patch
 URL:		http://hdf.ncsa.uiuc.edu/HDF5/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -86,6 +87,7 @@ Narzêdzia do konwersji z i to formatu HDF5.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}

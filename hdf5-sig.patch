@@ -1,5 +1,5 @@
---- hdf5-1.6.4/src/H5detect.c.orig	2005-02-28 17:22:42.000000000 +0000
-+++ hdf5-1.6.4/src/H5detect.c	2005-03-28 20:51:46.622816724 +0000
+--- hdf5-1.6.5/src/H5detect.c.orig	2005-09-12 19:18:23.000000000 +0200
++++ hdf5-1.6.5/src/H5detect.c	2005-11-15 18:25:36.030721792 +0100
 @@ -106,7 +106,7 @@
  static void detect_C99_integers64(void);
  static void detect_alignments(void);
@@ -12,7 +12,7 @@
 @@ -360,7 +360,7 @@
      void		(*_handler2)(int) = signal(SIGSEGV, sigsegv_handler);	\
  									      \
-     _buf = malloc(sizeof(TYPE)+align_g[NELMTS(align_g)-1]);		      \
+     _buf = (char*)malloc(sizeof(TYPE)+align_g[NELMTS(align_g)-1]);		      \
 -    if (setjmp(jbuf_g)) _ano++;						      \
 +    if (sigsetjmp(jbuf_g, 1)) _ano++;						      \
      if (_ano<NELMTS(align_g)) {						      \
@@ -34,7 +34,7 @@
 -    longjmp(jbuf_g, 1);
 +    siglongjmp(jbuf_g, 1);
  }
-     
+ 
  
 @@ -485,7 +485,7 @@
  sigbus_handler(int UNUSED signo)
@@ -43,5 +43,5 @@
 -    longjmp(jbuf_g, 1);
 +    siglongjmp(jbuf_g, 1);
  }
-     
+ 
  

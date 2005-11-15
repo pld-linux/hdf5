@@ -26,9 +26,9 @@
  LT_UNINSTALL=$(LT) --mode=uninstall $(RM)
  
  ## Optional variables. We must declare them here because Irix pmake
---- hdf5-1.6.4/config/gnu-flags.orig	2004-12-29 16:27:16.000000000 +0100
-+++ hdf5-1.6.4/config/gnu-flags	2005-03-28 02:28:39.948478952 +0200
-@@ -94,26 +94,6 @@
+--- hdf5-1.6.5/config/gnu-flags.orig	2005-10-28 22:15:26.000000000 +0200
++++ hdf5-1.6.5/config/gnu-flags	2005-11-15 18:20:35.303439288 +0100
+@@ -107,26 +107,6 @@
    gcc*|egcs*|pgcc*)
      # Architecture-specific flags
      arch=
@@ -55,15 +55,15 @@
      # Host-specific flags
      case "`hostname`" in
          sleipnir.ncsa.uiuc.edu)
-@@ -127,7 +107,6 @@
+@@ -140,7 +120,6 @@
      # Production
      case "$cc_vendor-$cc_version" in
        gcc-2.95.[34])
 -        PROD_CFLAGS="-O3"
          ;;
-       gcc-3.[0-4]*|gcc-4.0*)
+       gcc-3.[0-4]*|gcc-4.[01]*)
          # The optimization level is reduced for gcc 3.* and 4.* due to problems
-@@ -135,14 +114,11 @@
+@@ -148,14 +127,11 @@
          # optimization levels (which shows up as failures for various integer
          # types -> long long conversions in the test/dtypes test).  Perhaps
          # later versions of gcc will fix this bug... - QAK - 2003/10/20
@@ -78,39 +78,48 @@
          ;;
      esac
  
-@@ -175,7 +151,7 @@
+@@ -192,7 +168,7 @@
      CFLAGS="$CFLAGS -Wno-long-long"
  
      # Append warning flags from gcc-3* case
--    CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
-+    CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute"
+-    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
++    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute"
  
      # Append warning flags from gcc-3.2* case
-     CFLAGS="$CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wmultichar"
-@@ -208,7 +184,7 @@
+     DEBUG_CFLAGS="$DEBUG_CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wmultichar"
+@@ -225,7 +201,7 @@
      CFLAGS="$CFLAGS -Wno-long-long"
  
      # Append warning flags from gcc-3* case
--    CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
-+    CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute"
+-    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
++    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute"
  
      # Append warning flags from gcc-3.2* case
-     CFLAGS="$CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wmultichar"
-@@ -238,7 +214,7 @@
+     DEBUG_CFLAGS="$DEBUG_CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wmultichar"
+@@ -255,7 +231,7 @@
      CFLAGS="$CFLAGS -Wno-long-long"
  
      # Append warning flags from gcc-3* case
--    CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
-+    CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute"
+-    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
++    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute"
  
      # Append warning flags from gcc-3.2* case
-     CFLAGS="$CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wmultichar"
-@@ -262,7 +238,7 @@
+     DEBUG_CFLAGS="$DEBUG_CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wmultichar"
+@@ -279,7 +255,7 @@
      CFLAGS="$CFLAGS -Wno-long-long"
  
      # Append warning flags from gcc-3* case
--    CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
-+    CFLAGS="$CFLAGS -Wfloat-equal -Wmissing-format-attribute"
+-    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
++    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute"
  
      # Append more extra warning flags that only gcc3.2+ know about
-     CFLAGS="$CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wmultichar"
+     DEBUG_CFLAGS="$DEBUG_CFLAGS -Wmissing-noreturn -Wpacked -Wdisabled-optimization -Wmultichar"
+@@ -300,7 +276,7 @@
+     CFLAGS="$CFLAGS -Wno-long-long"
+ 
+     # Append some extra warning flags that only gcc3+ know about
+-    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute -Wpadded"
++    DEBUG_CFLAGS="$DEBUG_CFLAGS -Wfloat-equal -Wmissing-format-attribute"
+     ;;
+ 
+   gcc-2.9[56]*)

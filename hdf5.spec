@@ -6,7 +6,7 @@
 %bcond_without	szip	# build without SZIP support
 #
 Summary:	Hierarchical Data Format 5 library
-Summary(pl):	Biblioteka HDF5 (Hierarchical Data Format 5)
+Summary(pl.UTF-8):   Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.6.5
 Release:	2
@@ -35,16 +35,16 @@ implementation. HDF5 is designed to address some of the limitations of
 the older HDF product and to address current and anticipated
 requirements of modern systems and applications.
 
-%description -l pl
-HDF5 jest ca³kowicie nowym produktem Hierarchiczego Formatu Danych,
-sk³adaj±cym siê ze specyfikacji formatu danych oraz obs³uguj±cej go
-biblioteki. HDF5 zosta³ zaprojektowany aby pozbyæ siê ograniczeñ
-poprzedniego HDF oraz ¿eby zaspokoiæ bie¿±ce i przysz³e potrzeby
-wspó³czesnych systemów i aplikacji.
+%description -l pl.UTF-8
+HDF5 jest caÅ‚kowicie nowym produktem Hierarchiczego Formatu Danych,
+skÅ‚adajÄ…cym siÄ™ ze specyfikacji formatu danych oraz obsÅ‚ugujÄ…cej go
+biblioteki. HDF5 zostaÅ‚ zaprojektowany aby pozbyÄ‡ siÄ™ ograniczeÅ„
+poprzedniego HDF oraz Å¼eby zaspokoiÄ‡ bieÅ¼Ä…ce i przyszÅ‚e potrzeby
+wspÃ³Å‚czesnych systemÃ³w i aplikacji.
 
 %package devel
 Summary:	HDF5 library development package
-Summary(pl):	Pliki nag³ówkowe biblioteki HDF5
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki HDF5
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	openssl-devel
@@ -56,12 +56,12 @@ Obsoletes:	hdf5_hl-tutor
 %description devel
 Header files for HDF5 library and HDF5 documentation.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki HDF5 oraz dokumentacja HDF5.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki HDF5 oraz dokumentacja HDF5.
 
 %package static
 Summary:	HDF5 static library
-Summary(pl):	Statyczna biblioteka HDF5
+Summary(pl.UTF-8):   Statyczna biblioteka HDF5
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	hdf5_hl-static
@@ -69,20 +69,20 @@ Obsoletes:	hdf5_hl-static
 %description static
 Static version of HDF5 library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna wersja biblioteki HDF5.
 
 %package progs
 Summary:	HDF5 utilities
-Summary(pl):	Narzêdzia do plików HDF5
+Summary(pl.UTF-8):   NarzÄ™dzia do plikÃ³w HDF5
 Group:		Applications/File
 Requires:	%{name} = %{version}-%{release}
 
 %description progs
 Utilities to convert from/to HDF5 format.
 
-%description progs -l pl
-Narzêdzia do konwersji z i to formatu HDF5.
+%description progs -l pl.UTF-8
+NarzÄ™dzia do konwersji z i to formatu HDF5.
 
 %prep
 %setup -q

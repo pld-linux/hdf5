@@ -6,7 +6,7 @@
 %bcond_without	szip	# build without SZIP support
 #
 Summary:	Hierarchical Data Format 5 library
-Summary(pl.UTF-8):   Biblioteka HDF5 (Hierarchical Data Format 5)
+Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.6.5
 Release:	2
@@ -44,7 +44,7 @@ współczesnych systemów i aplikacji.
 
 %package devel
 Summary:	HDF5 library development package
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki HDF5
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HDF5
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	openssl-devel
@@ -61,7 +61,7 @@ Pliki nagłówkowe biblioteki HDF5 oraz dokumentacja HDF5.
 
 %package static
 Summary:	HDF5 static library
-Summary(pl.UTF-8):   Statyczna biblioteka HDF5
+Summary(pl.UTF-8):	Statyczna biblioteka HDF5
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Obsoletes:	hdf5_hl-static
@@ -74,7 +74,7 @@ Statyczna wersja biblioteki HDF5.
 
 %package progs
 Summary:	HDF5 utilities
-Summary(pl.UTF-8):   Narzędzia do plików HDF5
+Summary(pl.UTF-8):	Narzędzia do plików HDF5
 Group:		Applications/File
 Requires:	%{name} = %{version}-%{release}
 

@@ -1,6 +1,6 @@
---- hdf5-1.6.5/src/H5detect.c.orig	2005-09-12 19:18:23.000000000 +0200
-+++ hdf5-1.6.5/src/H5detect.c	2005-11-15 18:25:36.030721792 +0100
-@@ -106,7 +106,7 @@
+--- hdf5-1.8.1/src/H5detect.c.orig	2008-05-29 18:38:42.000000000 +0200
++++ hdf5-1.8.1/src/H5detect.c	2008-06-04 23:04:39.917510528 +0200
+@@ -109,7 +109,7 @@
  static void detect_C99_integers64(void);
  static void detect_alignments(void);
  static size_t align_g[] = {1, 2, 4, 8, 16};
@@ -9,7 +9,7 @@
  
  
  /*-------------------------------------------------------------------------
-@@ -360,7 +360,7 @@
+@@ -366,7 +366,7 @@
      void		(*_handler2)(int) = signal(SIGSEGV, sigsegv_handler);	\
  									      \
      _buf = (char*)malloc(sizeof(TYPE)+align_g[NELMTS(align_g)-1]);		      \
@@ -18,16 +18,16 @@
      if (_ano<NELMTS(align_g)) {						      \
  	*((TYPE*)(_buf+align_g[_ano])) = _val; /*possible SIGBUS or SEGSEGV*/	\
  	_val2 = *((TYPE*)(_buf+align_g[_ano]));	/*possible SIGBUS or SEGSEGV*/	\
-@@ -376,7 +376,7 @@
+@@ -383,7 +383,7 @@
  	    memcpy(_buf+align_g[_ano]+(INFO.offset/8),((char *)&_val)+(INFO.offset/8),(size_t)(INFO.precision/8)); \
  	_val2 = *((TYPE*)(_buf+align_g[_ano]));				      \
  	if(_val!=_val2)							      \
--	    longjmp(jbuf_g, 1);						      \
-+	    siglongjmp(jbuf_g, 1);						      \
+-	    longjmp(jbuf_g, 1);			        		      \
++	    siglongjmp(jbuf_g, 1);			        		      \
  	/* End Cray Check */						      \
  	(INFO.align)=align_g[_ano];					      \
      } else {								      \
-@@ -460,7 +460,7 @@
+@@ -467,7 +467,7 @@
  sigsegv_handler(int UNUSED signo)
  {
      signal(SIGSEGV, sigsegv_handler);
@@ -36,12 +36,14 @@
  }
  
  
-@@ -485,7 +485,7 @@
+@@ -492,10 +492,7 @@
  sigbus_handler(int UNUSED signo)
  {
      signal(SIGBUS, sigbus_handler);
 -    longjmp(jbuf_g, 1);
-+    siglongjmp(jbuf_g, 1);
+-#ifdef H5_HAVE_SIGLONGJMP
+     siglongjmp(jbuf_g, 1);
+-#endif /* H5_HAVE_SIGLONGJMP */
  }
  
  

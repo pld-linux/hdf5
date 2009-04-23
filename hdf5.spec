@@ -8,12 +8,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.1
+Version:	1.8.2
 Release:	1
 Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
-Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	db983df70a69f8d0d87314ad1ccc2256
+Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.gz
+# Source0-md5:	af92ef65ef495dbd205131574ad4eee1
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-link.patch
@@ -137,7 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README.txt release_docs/{HISTORY*.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/libhdf5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.5
+%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.6
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.0
 %attr(755,root,root) %{_libdir}/libhdf5_hl.so.*.*.*

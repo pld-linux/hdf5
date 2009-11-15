@@ -8,12 +8,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.3
+Version:	1.8.4
 Release:	1
-Group:		Libraries
 License:	Nearly BSD, but changed sources must be marked
+Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.gz
-# Source0-md5:	5ce228d860bf9e797ca40ab1a823c380
+# Source0-md5:	971cc81ef10f50d2bb63cd6879fca7bc
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-link.patch

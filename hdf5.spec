@@ -17,7 +17,7 @@ Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.gz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-link.patch
-URL:		http://hdf.ncsa.uiuc.edu/HDF5/
+URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel >= 6b

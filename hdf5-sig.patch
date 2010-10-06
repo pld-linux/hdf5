@@ -1,49 +1,19 @@
---- hdf5-1.8.2/src/H5detect.c.orig	2008-11-10 22:28:08.000000000 +0100
-+++ hdf5-1.8.2/src/H5detect.c	2009-04-23 07:14:48.909720511 +0200
-@@ -109,7 +109,7 @@
- static void detect_C99_integers64(void);
- static void detect_alignments(void);
- static size_t align_g[] = {1, 2, 4, 8, 16};
--static jmp_buf jbuf_g;
-+static sigjmp_buf jbuf_g;
+--- hdf5-1.8.5-patch1/configure.in.orig	2010-08-26 16:27:23.000000000 +0200
++++ hdf5-1.8.5-patch1/configure.in	2010-10-06 08:26:23.847742720 +0200
+@@ -2086,10 +2086,15 @@
+ AC_CHECK_FUNCS(alarm BSDgettimeofday fork frexpf frexpl)
+ AC_CHECK_FUNCS(gethostname getpwuid getrusage lstat)
+ AC_CHECK_FUNCS(rand_r random setsysinfo)
+-AC_CHECK_FUNCS(signal longjmp setjmp siglongjmp sigsetjmp sigprocmask)
++AC_CHECK_FUNCS(signal longjmp setjmp siglongjmp sigprocmask)
+ AC_CHECK_FUNCS(snprintf srandom strdup symlink system)
+ AC_CHECK_FUNCS(tmpfile vasprintf waitpid)
  
- 
- /*-------------------------------------------------------------------------
-@@ -368,7 +368,7 @@
-     void		(*_handler2)(int) = signal(SIGSEGV, sigsegv_handler);	\
- 									      \
-     _buf = (char*)malloc(sizeof(TYPE) + align_g[NELMTS(align_g) - 1]);	      \
--    if(setjmp(jbuf_g)) _ano++;						      \
-+    if(sigsetjmp(jbuf_g, 1)) _ano++;						      \
-     if(_ano < NELMTS(align_g)) {					      \
- 	*((TYPE*)(_buf+align_g[_ano])) = _val; /*possible SIGBUS or SEGSEGV*/	\
- 	_val2 = *((TYPE*)(_buf+align_g[_ano]));	/*possible SIGBUS or SEGSEGV*/	\
-@@ -385,7 +385,7 @@
- 	    memcpy(_buf+align_g[_ano]+(INFO.offset/8),((char *)&_val)+(INFO.offset/8),(size_t)(INFO.precision/8)); \
- 	_val2 = *((TYPE*)(_buf+align_g[_ano]));				      \
- 	if(_val!=_val2)							      \
--	    longjmp(jbuf_g, 1);			        		      \
-+	    siglongjmp(jbuf_g, 1);			        		      \
- 	/* End Cray Check */						      \
- 	(INFO.align)=align_g[_ano];					      \
-     } else {								      \
-@@ -469,7 +469,7 @@
- sigsegv_handler(int UNUSED signo)
- {
-     signal(SIGSEGV, sigsegv_handler);
--    longjmp(jbuf_g, 1);
-+    siglongjmp(jbuf_g, 1);
- }
- 
- 
-@@ -494,10 +494,7 @@
- sigbus_handler(int UNUSED signo)
- {
-     signal(SIGBUS, sigbus_handler);
--    longjmp(jbuf_g, 1);
--#ifdef H5_HAVE_SIGLONGJMP
-     siglongjmp(jbuf_g, 1);
--#endif /* H5_HAVE_SIGLONGJMP */
- }
- 
- 
++dnl cannot be detected in glibc by plain AC_CHECK_FUNCS
++AH_TEMPLATE([HAVE_SIGSETJMP], [Have sigsetjmp function])
++AC_CHECK_FUNC([sigsetjmp], [AC_DEFINE([HAVE_SIGSETJMP])],
++	[AC_CHECK_FUNC([__sigsetjmp], [AC_DEFINE([HAVE_SIGSETJMP])])])
++
+ dnl Check for vsnprintf() separately, so we can detect situations where it
+ dnl doesn't return the correct size for formatted strings that are too large
+ dnl for the buffer provided

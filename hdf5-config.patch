@@ -1,26 +1,19 @@
---- hdf5-1.8.3/config/gnu-flags.orig	2009-09-06 10:47:13.000000000 +0200
-+++ hdf5-1.8.3/config/gnu-flags	2009-09-06 10:48:19.000000000 +0200
-@@ -143,7 +143,6 @@
+--- hdf5-1.8.5-patch1/config/gnu-flags.orig	2010-08-26 16:21:53.000000000 +0200
++++ hdf5-1.8.5-patch1/config/gnu-flags	2010-10-05 22:12:48.883739367 +0200
+@@ -145,16 +145,12 @@
      # Production
      case "$cc_vendor-$cc_version" in
        gcc-2.95.[34])
 -        PROD_CFLAGS="-O3"
          ;;
-       gcc-4.[34]*)
-         # The optimization level is reduced for gcc 4.[34] due to problems
-@@ -153,7 +152,6 @@
-         # There's either a bug in gcc or our code. Need further investigation.
- 	# Turn off all optimizations to allow the tests to pass for now.
-         # - AKC - 2009/04/19
--        PROD_CFLAGS="-O0"
+       gcc-3.*)
+-        PROD_CFLAGS="-O3"
          ;;
-       gcc-3.[0-4]*|gcc-4.[012]*)
-         # The optimization level is reduced for gcc 3.* and 4.* due to problems
-@@ -161,7 +159,6 @@
-         # optimization levels (which shows up as failures for various integer
-         # types -> long long conversions in the test/dtypes test).  Perhaps
-         # later versions of gcc will fix this bug... - QAK - 2003/10/20
--        PROD_CFLAGS="-O"
+       gcc-4.*)
+-        PROD_CFLAGS="-O3"
          ;;
        *)
-         PROD_CFLAGS="-O"
+-        PROD_CFLAGS="-O"
+         ;;
+     esac
+ 

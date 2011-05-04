@@ -1,3 +1,13 @@
+--- hdf5-1.8.6/c++/src/Makefile.am.orig	2011-02-14 17:23:42.000000000 +0100
++++ hdf5-1.8.6/c++/src/Makefile.am	2011-05-03 22:01:04.307748409 +0200
+@@ -28,6 +28,7 @@
+ lib_LTLIBRARIES=libhdf5_cpp.la
+ 
+ # Add libtool numbers to the HDF5 C++ library (from config/lt_vers.am)
++libhdf5_cpp_la_LIBADD=$(top_builddir)/src/libhdf5.la
+ libhdf5_cpp_la_LDFLAGS= -version-info $(LT_VERS_INTERFACE):$(LT_VERS_REVISION):$(LT_VERS_AGE) $(AM_LDFLAGS)
+ 
+ # Shared C++ libraries aren't universally supported.
 --- hdf5-1.8.1/hl/src/Makefile.am.orig	2008-05-29 18:39:01.000000000 +0200
 +++ hdf5-1.8.1/hl/src/Makefile.am	2008-06-05 00:28:00.446476110 +0200
 @@ -27,6 +27,7 @@

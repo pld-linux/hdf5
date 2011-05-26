@@ -8,12 +8,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.6
+Version:	1.8.7
 Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.gz
-# Source0-md5:	bd2d369dfcf7aa0437dde6aeb8460a31
+# Source0-md5:	37711d4bcb72997e93d495f97c76c33a
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-link.patch
@@ -180,9 +180,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README.txt release_docs/{HISTORY*.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/libhdf5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.6
+%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.7
 %attr(755,root,root) %{_libdir}/libhdf5_hl.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.6
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.7
 # used to show configuration at runtime
 %{_libdir}/libhdf5.settings
 
@@ -251,9 +251,9 @@ rm -rf $RPM_BUILD_ROOT
 %files c++
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.6
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.7
 %attr(755,root,root) %{_libdir}/libhdf5_hl_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.6
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.7
 
 %files c++-devel
 %defattr(644,root,root,755)

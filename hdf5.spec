@@ -19,10 +19,10 @@ Patch1:		%{name}-sig.patch
 Patch2:		%{name}-link.patch
 URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.53
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 2:1.5
+BuildRequires:	libtool >= 2:2.2
 %{?with_szip:BuildRequires:	szip-devel >= 2.0}
 BuildRequires:	zlib-devel >= 1.1.3
 Obsoletes:	hdf5_hl
@@ -137,6 +137,7 @@ Narzędzia do konwersji z i to formatu HDF5.
 %{__automake}
 %configure \
 	--docdir=%{_docdir} \
+	--disable-silent-rules \
 	--enable-cxx \
 	--enable-linux-lfs \
 	--enable-production \

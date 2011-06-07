@@ -20,6 +20,7 @@ Patch2:		%{name}-link.patch
 URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake >= 1:1.11
+BuildRequires:	gcc-fortran
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
@@ -111,6 +112,49 @@ C++ APIs for HDF5 (both base hdf5 and hdf5_hl) - static libraries.
 API C++ dla bibliotek HDF5 (zarówno podstawowej hdf5, jak i hdf5_hl) -
 biblioteki statyczne.
 
+%package fortran
+Summary:	Fortran APIs for HDF5
+Summary(pl.UTF-8):	API Fortran bibliotek HDF5
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description fortran
+Fortran APIs for HDF5 (both base hdf5 and hdf5_hl).
+
+%description fortran -l pl.UTF-8
+API Fortran dla bibliotek HDF5 (zarówno podstawowej hdf5, jak i
+hdf5_hl).
+
+%package fortran-devel
+Summary:	Header files for HDF5 Fortran APIs
+Summary(pl.UTF-8):	Pliki nagłówkowe API Fortran bibliotek HDF5
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-fortran = %{version}-%{release}
+Requires:	libstdfortran-devel
+
+%description fortran-devel
+Module and header files for HDF5 Fortran APIs (both base hdf5 and
+hdf5_hl).
+
+%description fortran-devel -l pl.UTF-8
+Moduły i pliki nagłówkowe API C++ bibliotek HDF5 (zarówno podstawowej
+hdf5, jak i hdf5_hl).
+
+
+%package fortran-static
+Summary:	Fortran APIs for HDF5 - static libraries
+Summary(pl.UTF-8):	API Fortran bibliotek HDF5 - biblioteki statyczne
+Group:		Development/Libraries
+Requires:	%{name}-fortran-devel = %{version}-%{release}
+
+%description fortran-static
+Fortran APIs for HDF5 (both base hdf5 and hdf5_hl) - static libraries.
+
+%description fortran-static -l pl.UTF-8
+API Fortran dla bibliotek HDF5 (zarówno podstawowej hdf5, jak i
+hdf5_hl) - biblioteki statyczne.
+
 %package progs
 Summary:	HDF5 utilities
 Summary(pl.UTF-8):	Narzędzia do plików HDF5
@@ -139,6 +183,7 @@ Narzędzia do konwersji z i to formatu HDF5.
 	--docdir=%{_docdir} \
 	--disable-silent-rules \
 	--enable-cxx \
+	--enable-fortran \
 	--enable-linux-lfs \
 	--enable-production \
 	--with-pthread \
@@ -246,8 +291,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libhdf5.a
 %{_libdir}/libhdf5_cpp.a
+%{_libdir}/libhdf5_fortran.a
 %{_libdir}/libhdf5_hl.a
 %{_libdir}/libhdf5_hl_cpp.a
+%{_libdir}/libhdf5hl_fortran.a
 
 %files c++
 %defattr(644,root,root,755)
@@ -295,6 +342,45 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5VarLenType.h
 %{_examplesdir}/%{name}-%{version}/c++
 %{_examplesdir}/%{name}-%{version}/hl/c++
+
+%files fortran
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libhdf5_fortran.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.7
+%attr(755,root,root) %{_libdir}/libhdf5hl_fortran.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.7
+
+%files fortran-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/h5fc
+%{_libdir}/libhdf5_fortran.so
+%{_libdir}/libhdf5hl_fortran.so
+%{_libdir}/libhdf5_fortran.la
+%{_libdir}/libhdf5hl_fortran.la
+%{_includedir}/H5f90i.h
+%{_includedir}/H5f90i_gen.h
+%{_includedir}/h5_dble_interface.mod
+%{_includedir}/h5a.mod
+%{_includedir}/h5d.mod
+%{_includedir}/h5e.mod
+%{_includedir}/h5f.mod
+%{_includedir}/h5fortran_types.mod
+%{_includedir}/h5g.mod
+%{_includedir}/h5global.mod
+%{_includedir}/h5i.mod
+%{_includedir}/h5im.mod
+%{_includedir}/h5l.mod
+%{_includedir}/h5lib.mod
+%{_includedir}/h5lt.mod
+%{_includedir}/h5o.mod
+%{_includedir}/h5p.mod
+%{_includedir}/h5r.mod
+%{_includedir}/h5s.mod
+%{_includedir}/h5t.mod
+%{_includedir}/h5tb.mod
+%{_includedir}/h5z.mod
+%{_includedir}/hdf5.mod
+
 
 %files progs
 %defattr(644,root,root,755)

@@ -9,7 +9,7 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.7
-Release:	1
+Release:	2
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.gz
@@ -20,7 +20,7 @@ Patch2:		%{name}-link.patch
 URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	gcc-fortran
+BuildRequires:	gcc-fortran >= 5:4.0
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
@@ -131,7 +131,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe API Fortran bibliotek HDF5
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-fortran = %{version}-%{release}
-Requires:	libstdfortran-devel
+Requires:	gcc-fortran >= 5:4.0
 
 %description fortran-devel
 Module and header files for HDF5 Fortran APIs (both base hdf5 and
@@ -140,7 +140,6 @@ hdf5_hl).
 %description fortran-devel -l pl.UTF-8
 Moduły i pliki nagłówkowe API C++ bibliotek HDF5 (zarówno podstawowej
 hdf5, jak i hdf5_hl).
-
 
 %package fortran-static
 Summary:	Fortran APIs for HDF5 - static libraries
@@ -190,7 +189,6 @@ Narzędzia do konwersji z i to formatu HDF5.
 	%{?with_szip:--with-szlib}
 
 #	--enable-threadsafe is incompatible with cxx/fortran
-#	--enable-fortran  - requires Fortran90 compiler
 
 %{__make}
 
@@ -221,6 +219,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	c++ -p /sbin/ldconfig
 %postun	c++ -p /sbin/ldconfig
+
+%post	fortran -p /sbin/ldconfig
+%postun	fortran -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
@@ -290,11 +291,7 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libhdf5.a
-%{_libdir}/libhdf5_cpp.a
-%{_libdir}/libhdf5_fortran.a
 %{_libdir}/libhdf5_hl.a
-%{_libdir}/libhdf5_hl_cpp.a
-%{_libdir}/libhdf5hl_fortran.a
 
 %files c++
 %defattr(644,root,root,755)
@@ -343,6 +340,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_examplesdir}/%{name}-%{version}/c++
 %{_examplesdir}/%{name}-%{version}/hl/c++
 
+%files c++-static
+%defattr(644,root,root,755)
+%{_libdir}/libhdf5_cpp.a
+%{_libdir}/libhdf5_hl_cpp.a
+
 %files fortran
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_fortran.so.*.*.*
@@ -353,8 +355,8 @@ rm -rf $RPM_BUILD_ROOT
 %files fortran-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/h5fc
-%{_libdir}/libhdf5_fortran.so
-%{_libdir}/libhdf5hl_fortran.so
+%attr(755,root,root) %{_libdir}/libhdf5_fortran.so
+%attr(755,root,root) %{_libdir}/libhdf5hl_fortran.so
 %{_libdir}/libhdf5_fortran.la
 %{_libdir}/libhdf5hl_fortran.la
 %{_includedir}/H5f90i.h
@@ -381,6 +383,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/h5z.mod
 %{_includedir}/hdf5.mod
 
+%files fortran-static
+%defattr(644,root,root,755)
+%{_libdir}/libhdf5_fortran.a
+%{_libdir}/libhdf5hl_fortran.a
 
 %files progs
 %defattr(644,root,root,755)

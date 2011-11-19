@@ -3,24 +3,25 @@
 # - check missing file
 #
 # Conditional build:
-%bcond_without	szip	# build without SZIP support
+%bcond_without	fortran2003	# Fortran 2003 interface
+%bcond_without	szip		# build without SZIP support
 #
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.7
-Release:	2
+Version:	1.8.8
+Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
-Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.gz
-# Source0-md5:	37711d4bcb72997e93d495f97c76c33a
+Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	ab115337d4004a3816318b993b32a52f
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-link.patch
 URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	gcc-fortran >= 5:4.0
+BuildRequires:	gcc-fortran >= %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4.0}
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
@@ -131,7 +132,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe API Fortran bibliotek HDF5
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-fortran = %{version}-%{release}
-Requires:	gcc-fortran >= 5:4.0
+Requires:	gcc-fortran %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4.0}
 
 %description fortran-devel
 Module and header files for HDF5 Fortran APIs (both base hdf5 and
@@ -183,6 +184,7 @@ Narzędzia do konwersji z i to formatu HDF5.
 	--disable-silent-rules \
 	--enable-cxx \
 	--enable-fortran \
+	%{?with_fortran2003:--enable-fortran2003} \
 	--enable-linux-lfs \
 	--enable-production \
 	--with-pthread \
@@ -363,8 +365,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5f90i_gen.h
 %{_includedir}/h5_dble_interface.mod
 %{_includedir}/h5a.mod
+%{_includedir}/h5a_provisional.mod
 %{_includedir}/h5d.mod
+%{_includedir}/h5d_provisional.mod
+%{_includedir}/h5ds.mod
 %{_includedir}/h5e.mod
+%{_includedir}/h5e_provisional.mod
 %{_includedir}/h5f.mod
 %{_includedir}/h5fortran_types.mod
 %{_includedir}/h5g.mod
@@ -372,13 +378,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/h5i.mod
 %{_includedir}/h5im.mod
 %{_includedir}/h5l.mod
+%{_includedir}/h5l_provisional.mod
 %{_includedir}/h5lib.mod
+%{_includedir}/h5lib_provisional.mod
 %{_includedir}/h5lt.mod
 %{_includedir}/h5o.mod
+%{_includedir}/h5o_provisional.mod
 %{_includedir}/h5p.mod
+%{_includedir}/h5p_provisional.mod
 %{_includedir}/h5r.mod
+%{_includedir}/h5r_provisional.mod
 %{_includedir}/h5s.mod
 %{_includedir}/h5t.mod
+%{_includedir}/h5t_provisional.mod
 %{_includedir}/h5tb.mod
 %{_includedir}/h5z.mod
 %{_includedir}/hdf5.mod

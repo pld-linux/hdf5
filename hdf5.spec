@@ -10,7 +10,7 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.8
-Release:	1
+Release:	2
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
@@ -132,7 +132,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe API Fortran bibliotek HDF5
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-fortran = %{version}-%{release}
-Requires:	gcc-fortran %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4.0}
+Requires:	gcc-fortran >= %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4.0}
 
 %description fortran-devel
 Module and header files for HDF5 Fortran APIs (both base hdf5 and

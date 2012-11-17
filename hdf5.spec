@@ -9,17 +9,17 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.9
+Version:	1.8.10
 Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	33e105583417eff1c57fff910a53cd6f
+# Source0-md5:	8166c0fa3ee34fee6cdef4c5f3cbc94e
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-link.patch
 URL:		http://www.hdfgroup.org/HDF5/
-BuildRequires:	autoconf >= 2.53
+BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	gcc-fortran >= %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4.0}
 BuildRequires:	libjpeg-devel >= 6b

@@ -10,14 +10,15 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.10
-Release:	1
+Release:	2
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
-Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	8166c0fa3ee34fee6cdef4c5f3cbc94e
+Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}-patch1.tar.bz2
+# Source0-md5:	86cd479b7a34abe916e2fec8b7280863
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-link.patch
+Patch3:		%{name}-cmake.patch
 URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
@@ -168,10 +169,11 @@ Utilities to convert from/to HDF5 format.
 Narzędzia do konwersji z i to formatu HDF5.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-patch1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -212,6 +214,40 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl
 	EXAMPLETOPDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl
 %{__make} -C hl/c++/examples install-examples \
 	EXAMPLEDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl/c++
+
+install -d $RPM_BUILD_ROOT%{_datadir}/cmake/hdf5
+vmajor=$(sed -ne 's/^#define H5_VERS_MAJOR\s*\([0-9]\+\).*/\1/' src/H5public.h)
+vminor=$(sed -ne 's/^#define H5_VERS_MINOR\s*\([0-9]\+\).*/\1/' src/H5public.h)
+vrel=$(sed -ne 's/^#define H5_VERS_RELEASE\s*\([0-9]\+\).*/\1/' src/H5public.h)
+vsubr=$(sed -ne 's/^#define H5_VERS_SUBRELEASE\s*\([0-9]\+\).*/\1/' src/H5public.h)
+for f in FindHDF5.cmake hdf5-config-version.cmake hdf5-config.cmake.install hdf5-targets.cmake hdf5-targets-noconfig.cmake ; do
+	sed -e 's,@HDF5_PACKAGE@,hdf5,' \
+	    -e 's,@HDF_PACKAGE_EXT@,,' \
+	    -e "s,@HDF5_VERSION_STRING@,%{version}," \
+	    -e "s,@HDF5_VERSION_MAJOR@,1.8," \
+	    -e "s,@HDF5_VERSION_MINOR@,$vrel," \
+	    -e "s,@H5_VERS_MAJOR@,$vmajor," \
+	    -e "s,@H5_VERS_MINOR@,$vminor," \
+	    -e "s,@H5_VERS_RELEASE@,$vrel," \
+	    -e "s,@H5_VERS_SUBRELEASE@,$vsubr," \
+	    -e 's,@HDF5_ENABLE_PARALLEL@,OFF,' \
+	    -e 's,@HDF5_BUILD_FORTRAN@,ON,' \
+	    -e 's,@HDF5_ENABLE_F2003@,%{?with_fortran2003:ON}%{!?with_fortran2003:OFF},' \
+	    -e 's,@HDF5_BUILD_CPP_LIB@,ON,' \
+	    -e 's,@HDF5_BUILD_TOOLS@,ON,' \
+	    -e 's,@HDF5_BUILD_HL_LIB@,ON,' \
+	    -e 's,@HDF5_ENABLE_Z_LIB_SUPPORT@,ON,' \
+	    -e 's,@HDF5_ENABLE_SZIP_SUPPORT@,%{?with_szip:ON}%{!?with_szip:OFF},' \
+	    -e 's,@HDF5_ENABLE_SZIP_ENCODING@,%{?with_szip:ON}%{!?with_szip:OFF},' \
+	    -e 's,@BUILD_SHARED_LIBS@,ON,' \
+	    -e 's,@HDF5_PACKAGE_EXTLIBS@,OFF,' \
+	    -e 's,@ZLIB_PACKAGE_NAME@,zlib,' \
+	    -e 's,@SZIP_PACKAGE_NAME@,szip,' \
+	    -e 's,@HDF5_LIBRARIES_TO_EXPORT@,hdf5,' \
+	    -e "s,@lib@,%{_lib}," \
+		config/cmake/${f}.in > $RPM_BUILD_ROOT%{_datadir}/cmake/hdf5/$f
+done
+mv $RPM_BUILD_ROOT%{_datadir}/cmake/hdf5/hdf5-config.cmake{.install,}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -283,6 +319,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5version.h
 %{_includedir}/hdf5.h
 %{_includedir}/hdf5_hl.h
+%{_datadir}/cmake/hdf5
 %dir %{_examplesdir}/%{name}-%{version}
 %{_examplesdir}/%{name}-%{version}/run-all-ex.sh
 %{_examplesdir}/%{name}-%{version}/c

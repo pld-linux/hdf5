@@ -10,7 +10,7 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.10
-Release:	2
+Release:	3
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}-patch1.tar.bz2
@@ -216,10 +216,10 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl
 	EXAMPLEDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl/c++
 
 install -d $RPM_BUILD_ROOT%{_datadir}/cmake/hdf5
-vmajor=$(sed -ne 's/^#define H5_VERS_MAJOR\s*\([0-9]\+\).*/\1/' src/H5public.h)
-vminor=$(sed -ne 's/^#define H5_VERS_MINOR\s*\([0-9]\+\).*/\1/' src/H5public.h)
-vrel=$(sed -ne 's/^#define H5_VERS_RELEASE\s*\([0-9]\+\).*/\1/' src/H5public.h)
-vsubr=$(sed -ne 's/^#define H5_VERS_SUBRELEASE\s*\([0-9]\+\).*/\1/' src/H5public.h)
+vmajor=$(sed -ne 's/^#define H5_VERS_MAJOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
+vminor=$(sed -ne 's/^#define H5_VERS_MINOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
+vrel=$(sed -ne 's/^#define H5_VERS_RELEASE\s*\([0-9]\+\).*/\1/p' src/H5public.h)
+vsubr=$(sed -ne 's/^#define H5_VERS_SUBRELEASE\s*\([^ \t]\+\).*/\1/p' src/H5public.h)
 for f in FindHDF5.cmake hdf5-config-version.cmake hdf5-config.cmake.install hdf5-targets.cmake hdf5-targets-noconfig.cmake ; do
 	sed -e 's,@HDF5_PACKAGE@,hdf5,' \
 	    -e 's,@HDF_PACKAGE_EXT@,,' \

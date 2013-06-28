@@ -9,16 +9,15 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.10
-Release:	3
+Version:	1.8.11
+Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
-Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}-patch1.tar.bz2
-# Source0-md5:	86cd479b7a34abe916e2fec8b7280863
+Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	3433c1be767d2b8e5b0771a3209b4fcc
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
-Patch2:		%{name}-link.patch
-Patch3:		%{name}-cmake.patch
+Patch2:		%{name}-cmake.patch
 URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
@@ -169,11 +168,10 @@ Utilities to convert from/to HDF5 format.
 Narzędzia do konwersji z i to formatu HDF5.
 
 %prep
-%setup -q -n %{name}-%{version}-patch1
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -265,9 +263,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README.txt release_docs/{HISTORY*.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/libhdf5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.7
+%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.8
 %attr(755,root,root) %{_libdir}/libhdf5_hl.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.7
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.8
 # used to show configuration at runtime
 %{_libdir}/libhdf5.settings
 
@@ -281,6 +279,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5ACpublic.h
 %{_includedir}/H5Apublic.h
 %{_includedir}/H5Cpublic.h
+%{_includedir}/H5DOpublic.h
 %{_includedir}/H5DSpublic.h
 %{_includedir}/H5Dpublic.h
 %{_includedir}/H5Epubgen.h
@@ -307,6 +306,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5Opublic.h
 %{_includedir}/H5PTpublic.h
 %{_includedir}/H5Ppublic.h
+%{_includedir}/H5PLextern.h
 %{_includedir}/H5Rpublic.h
 %{_includedir}/H5Spublic.h
 %{_includedir}/H5TBpublic.h
@@ -319,8 +319,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5version.h
 %{_includedir}/hdf5.h
 %{_includedir}/hdf5_hl.h
+
 %{_datadir}/cmake/hdf5
 %dir %{_examplesdir}/%{name}-%{version}
+%{_examplesdir}/%{name}-%{version}/README
 %{_examplesdir}/%{name}-%{version}/run-all-ex.sh
 %{_examplesdir}/%{name}-%{version}/c
 %dir %{_examplesdir}/%{name}-%{version}/hl
@@ -335,9 +337,9 @@ rm -rf $RPM_BUILD_ROOT
 %files c++
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.7
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.8
 %attr(755,root,root) %{_libdir}/libhdf5_hl_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.7
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.8
 
 %files c++-devel
 %defattr(644,root,root,755)
@@ -387,9 +389,9 @@ rm -rf $RPM_BUILD_ROOT
 %files fortran
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_fortran.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.7
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.8
 %attr(755,root,root) %{_libdir}/libhdf5hl_fortran.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.7
+%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.8
 
 %files fortran-devel
 %defattr(644,root,root,755)
@@ -409,6 +411,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/h5e.mod
 %{_includedir}/h5e_provisional.mod
 %{_includedir}/h5f.mod
+%{_includedir}/h5f_provisional.mod
 %{_includedir}/h5fortran_types.mod
 %{_includedir}/h5g.mod
 %{_includedir}/h5global.mod

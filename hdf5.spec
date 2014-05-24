@@ -9,12 +9,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.12
+Version:	1.8.13
 Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	75829af785e54332cdef6ad5a4a96607
+# Source0-md5:	b060bb137d6bd8accf8f0c4c59d2746d
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-cmake.patch
@@ -290,7 +290,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5FDlog.h
 %{_includedir}/H5FDmpi.h
 %{_includedir}/H5FDmpio.h
-%{_includedir}/H5FDmpiposix.h
 %{_includedir}/H5FDmulti.h
 %{_includedir}/H5FDpublic.h
 %{_includedir}/H5FDsec2.h
@@ -433,6 +432,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/h5t.mod
 %{_includedir}/h5t_provisional.mod
 %{_includedir}/h5tb.mod
+%{_includedir}/h5test_kind_sizeof_mod.mod
 %{_includedir}/h5z.mod
 %{_includedir}/hdf5.mod
 

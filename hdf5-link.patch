@@ -1,0 +1,15 @@
+--- hdf5-1.8.14/configure.ac.orig	2014-11-14 22:11:38.755722107 +0100
++++ hdf5-1.8.14/configure.ac	2014-11-14 22:49:25.102293632 +0100
+@@ -115,12 +115,6 @@
+ AM_CXXFLAGS="${AM_CXXFLAGS}"
+ AM_FCFLAGS="${AM_FCFLAGS}"
+ AM_CPPFLAGS="${AM_CPPFLAGS}"
+-# Added to address HDFFV-8944
+-if test "x$prefix" = xNONE; then
+-  AM_LDFLAGS="$AM_LDFLAGS -L$ac_default_prefix/lib"
+-else
+-  AM_LDFLAGS="$AM_LDFLAGS -L$prefix/lib"
+-fi
+ CFLAGS="${CFLAGS}"
+ CXXFLAGS="${CXXFLAGS}"
+ FCFLAGS="${FCFLAGS}"

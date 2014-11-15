@@ -9,15 +9,16 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.13
+Version:	1.8.14
 Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	b060bb137d6bd8accf8f0c4c59d2746d
+# Source0-md5:	719df6d46eea52e42dd97d59dcbf5311
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-cmake.patch
+Patch3:		%{name}-link.patch
 URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
@@ -172,6 +173,7 @@ Narzędzia do konwersji z i to formatu HDF5.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -263,9 +265,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README.txt release_docs/{HISTORY*.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/libhdf5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.8
+%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.9
 %attr(755,root,root) %{_libdir}/libhdf5_hl.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.8
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.9
 # used to show configuration at runtime
 %{_libdir}/libhdf5.settings
 
@@ -336,9 +338,9 @@ rm -rf $RPM_BUILD_ROOT
 %files c++
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.8
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.9
 %attr(755,root,root) %{_libdir}/libhdf5_hl_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.8
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.9
 
 %files c++-devel
 %defattr(644,root,root,755)
@@ -389,9 +391,9 @@ rm -rf $RPM_BUILD_ROOT
 %files fortran
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_fortran.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.8
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.9
 %attr(755,root,root) %{_libdir}/libhdf5hl_fortran.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.8
+%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.9
 
 %files fortran-devel
 %defattr(644,root,root,755)
@@ -432,7 +434,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/h5t.mod
 %{_includedir}/h5t_provisional.mod
 %{_includedir}/h5tb.mod
-%{_includedir}/h5test_kind_sizeof_mod.mod
+%{_includedir}/h5test_kind_storage_size_mod.mod
 %{_includedir}/h5z.mod
 %{_includedir}/hdf5.mod
 

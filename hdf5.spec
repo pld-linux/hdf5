@@ -1,16 +1,17 @@
 # TODO:
-# - build with MPICH
+# - finish (optional) MPI support (1.8.14: fails on mpi_file_open check)
 # - check missing file
 #
 # Conditional build:
 %bcond_without	fortran2003	# Fortran 2003 interface
-%bcond_without	szip		# build without SZIP support
+%bcond_without	szip		# SZIP compression support
+%bcond_with	mpi		# parallel version of library using MPI
 #
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.14
-Release:	1
+Release:	2
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
@@ -26,6 +27,7 @@ BuildRequires:	gcc-fortran >= %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
+%{?with_mpi:BuildRequires:	mpi-devel}
 %{?with_szip:BuildRequires:	szip-devel >= 2.0}
 BuildRequires:	zlib-devel >= 1.1.3
 Obsoletes:	hdf5_hl
@@ -188,7 +190,9 @@ Narzędzia do konwersji z i to formatu HDF5.
 	--enable-fortran \
 	%{?with_fortran2003:--enable-fortran2003} \
 	--enable-linux-lfs \
+	%{?with_mpi:--enable-parallel --enable-unsupported} \
 	--enable-production \
+	--enable-shared \
 	--with-pthread \
 	%{?with_szip:--with-szlib}
 

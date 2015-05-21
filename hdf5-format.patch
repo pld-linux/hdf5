@@ -1,0 +1,20 @@
+--- hdf5-1.8.15/test/error_test.c.orig	2015-05-01 20:36:27.000000000 +0200
++++ hdf5-1.8.15/test/error_test.c	2015-05-20 18:28:01.999946222 +0200
+@@ -498,7 +498,7 @@
+     if(err_num != 0) TEST_ERROR
+ 
+     /* Push an error with a long description */
+-    if(H5Epush(estack_id, __FILE__, err_func, __LINE__, ERR_CLS, ERR_MAJ_TEST, ERR_MIN_SUBROUTINE, err_msg) < 0) TEST_ERROR;
++    if(H5Epush(estack_id, __FILE__, err_func, __LINE__, ERR_CLS, ERR_MAJ_TEST, ERR_MIN_SUBROUTINE, "%s", err_msg) < 0) TEST_ERROR;
+ 
+     /* Check the number of errors on stack */
+     err_num = H5Eget_num(estack_id);
+@@ -543,7 +543,7 @@
+     herr_t      ret;                 /* Generic return value */
+ 
+     /* Push an error with a long description */
+-    if(H5Epush(H5E_DEFAULT, __FILE__, err_func, __LINE__, ERR_CLS, ERR_MAJ_TEST, ERR_MIN_SUBROUTINE, err_msg) < 0) TEST_ERROR;
++    if(H5Epush(H5E_DEFAULT, __FILE__, err_func, __LINE__, ERR_CLS, ERR_MAJ_TEST, ERR_MIN_SUBROUTINE, "%s", err_msg) < 0) TEST_ERROR;
+ 
+     /* Check the number of errors on stack */
+     err_num = H5Eget_num(H5E_DEFAULT);

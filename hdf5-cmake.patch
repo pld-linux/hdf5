@@ -164,3 +164,11 @@
  endif ()
  
  if (HDF5_BUILD_SHARED_LIBS)
+@@ -141,6 +141,3 @@
+       endif ()
+     endif ()
+   endforeach ()
+-
+-  check_required_components(${HDF5_PACKAGE_NAME}_FIND_COMPONENTS)
+-  
+\ No newline at end of file

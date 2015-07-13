@@ -11,7 +11,7 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.15
-Release:	2
+Release:	3
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
@@ -252,7 +252,7 @@ for f in FindHDF5.cmake hdf5-config-version.cmake hdf5-config.cmake hdf5-targets
 	    %{?with_mpi:-e 's,@MPI_C_INCLUDE_PATH@,%{_includedir},'} \
 	    %{?with_mpi:-e 's,@MPI_C_LIBRARIES@,%{_libdir},'} \
 	    -e 's,@PACKAGE_INCLUDE_INSTALL_DIR@,%{_includedir},' \
-	    -e 's,@PACKAGE_SHARE_INSTALL_DIR@,%{_datadir},' \
+	    -e 's,@PACKAGE_SHARE_INSTALL_DIR@,%{_datadir}/cmake/hdf5,' \
 	    -e 's,@PACKAGE_CURRENT_BUILD_DIR@,%{_prefix},' \
 		config/cmake/${f}.in > $RPM_BUILD_ROOT%{_datadir}/cmake/hdf5/$f
 done

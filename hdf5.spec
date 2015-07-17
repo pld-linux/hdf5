@@ -11,7 +11,7 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.15
-Release:	3
+Release:	4
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
@@ -243,6 +243,13 @@ for f in FindHDF5.cmake hdf5-config-version.cmake hdf5-config.cmake hdf5-targets
 	    -e 's,@HDF5_ENABLE_Z_LIB_SUPPORT@,ON,' \
 	    -e 's,@HDF5_ENABLE_SZIP_SUPPORT@,%{?with_szip:ON}%{!?with_szip:OFF},' \
 	    -e 's,@HDF5_ENABLE_SZIP_ENCODING@,%{?with_szip:ON}%{!?with_szip:OFF},' \
+%ifarch %{ix86} x32
+	    -e 's,@CMAKE_SIZEOF_VOID_P@,4,' \
+%else
+%ifarch %{x8664}
+	    -e 's,@CMAKE_SIZEOF_VOID_P@,8,' \
+%endif
+%endif
 	    -e 's,@BUILD_SHARED_LIBS@,ON,' \
 	    -e 's,@HDF5_PACKAGE_EXTLIBS@,OFF,' \
 	    -e 's,@ZLIB_PACKAGE_NAME@,zlib,' \

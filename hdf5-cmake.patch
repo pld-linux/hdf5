@@ -136,8 +136,8 @@
 +
 +# Commands beyond this point should not need to know the version.
 +SET(CMAKE_IMPORT_FILE_VERSION)
---- hdf5-1.8.15/config/cmake/hdf5-config.cmake.in~	2015-05-01 20:36:45.000000000 +0200
-+++ hdf5-1.8.15/config/cmake/hdf5-config.cmake.in	2015-07-13 22:14:01.374454258 +0200
+--- hdf5-1.8.16/config/cmake/hdf5-config.cmake.in.orig	2015-10-24 07:14:03.000000000 +0200
++++ hdf5-1.8.16/config/cmake/hdf5-config.cmake.in	2015-11-26 21:14:53.838328233 +0100
 @@ -1,7 +1,6 @@
  #-----------------------------------------------------------------------------
  # HDF5 Config file for compiling against hdf5 build/install directory
@@ -146,16 +146,16 @@
  
  string(TOUPPER @HDF5_PACKAGE@ HDF5_PACKAGE_NAME)
  
-@@ -45,7 +45,7 @@
+@@ -47,7 +46,7 @@
  set (${HDF5_PACKAGE_NAME}_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@" "${${HDF5_PACKAGE_NAME}_MPI_C_INCLUDE_PATH}")
  
  set (${HDF5_PACKAGE_NAME}_SHARE_DIR "@PACKAGE_SHARE_INSTALL_DIR@")
 -set_and_check (${HDF5_PACKAGE_NAME}_BUILD_DIR "@PACKAGE_CURRENT_BUILD_DIR@")
 +set (${HDF5_PACKAGE_NAME}_BUILD_DIR "@PACKAGE_CURRENT_BUILD_DIR@")
  
- if (${HDF5_PACKAGE_NAME}_BUILD_FORTRAN)
-   set (${HDF5_PACKAGE_NAME}_INCLUDE_DIR_FORTRAN "@PACKAGE_INCLUDE_INSTALL_DIR@")
-@@ -65,7 +65,7 @@
+ if (${HDF5_PACKAGE_NAME}_BUILD_CPP_LIB)
+   set (${HDF5_PACKAGE_NAME}_INCLUDE_DIR_CPP "@PACKAGE_INCLUDE_INSTALL_DIR@")
+@@ -63,7 +62,7 @@
  
  if (${HDF5_PACKAGE_NAME}_BUILD_TOOLS)
    set (${HDF5_PACKAGE_NAME}_INCLUDE_DIR_TOOLS "@PACKAGE_INCLUDE_INSTALL_DIR@")
@@ -163,12 +163,12 @@
 +  set (${HDF5_PACKAGE_NAME}_TOOLS_DIR "@PACKAGE_CURRENT_BUILD_DIR@/bin")
  endif ()
  
- if (HDF5_BUILD_SHARED_LIBS)
-@@ -141,6 +141,3 @@
-       endif ()
+ #-----------------------------------------------------------------------------
+@@ -154,7 +153,3 @@
      endif ()
    endforeach ()
+ endforeach ()
 -
--  check_required_components(${HDF5_PACKAGE_NAME}_FIND_COMPONENTS)
--  
-\ No newline at end of file
+-foreach (libtype IN LISTS ${HDF5_PACKAGE_NAME}_LIB_TYPE)
+-  check_required_components(${HDF5_PACKAGE_NAME}_${libtype})
+-endforeach ()

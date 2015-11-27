@@ -1,19 +1,15 @@
---- hdf5-1.8.5-patch1/config/gnu-flags.orig	2010-08-26 16:21:53.000000000 +0200
-+++ hdf5-1.8.5-patch1/config/gnu-flags	2010-10-05 22:12:48.883739367 +0200
-@@ -145,16 +145,12 @@
+--- hdf5-1.8.16/config/gnu-flags.orig	2015-11-26 21:06:26.741682874 +0100
++++ hdf5-1.8.16/config/gnu-flags	2015-11-26 21:08:37.605010716 +0100
+@@ -99,10 +99,10 @@
      # Production
      case "$cc_vendor-$cc_version" in
-       gcc-2.95.[34])
+       gcc-[34].*)
 -        PROD_CFLAGS="-O3"
++        PROD_CFLAGS=
          ;;
-       gcc-3.*)
--        PROD_CFLAGS="-O3"
-         ;;
-       gcc-4.*)
--        PROD_CFLAGS="-O3"
+       gcc-5.*)
+-        PROD_CFLAGS="-O3 -fstdarg-opt"
++        PROD_CFLAGS="-fstdarg-opt"
          ;;
        *)
--        PROD_CFLAGS="-O"
-         ;;
-     esac
- 
+         PROD_CFLAGS="-O -finline-functions"

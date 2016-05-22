@@ -10,16 +10,15 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.16
+Version:	1.8.17
 Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	79c1593573ebddf734eee8d43ecfe483
+# Source0-md5:	34bd1afa5209259201a41964100d6203
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-cmake.patch
-Patch3:		%{name}-format.patch
 URL:		http://www.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
@@ -175,7 +174,6 @@ Narzędzia do konwersji z i to formatu HDF5.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -353,7 +351,7 @@ rm -rf $RPM_BUILD_ROOT
 %files c++
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.11
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.12
 %attr(755,root,root) %{_libdir}/libhdf5_hl_cpp.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.11
 

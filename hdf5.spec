@@ -10,16 +10,16 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.17
-Release:	2
+Version:	1.8.20
+Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
-Source0:	ftp://ftp.hdfgroup.org/HDF5/current/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	34bd1afa5209259201a41964100d6203
+Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	23078d57975903e9536d1e7b299cc39c
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-cmake.patch
-URL:		http://www.hdfgroup.org/HDF5/
+URL:		https://support.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	gcc-fortran >= %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4.0}
@@ -221,8 +221,8 @@ vmajor=$(sed -ne 's/^#define H5_VERS_MAJOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
 vminor=$(sed -ne 's/^#define H5_VERS_MINOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
 vrel=$(sed -ne 's/^#define H5_VERS_RELEASE\s*\([0-9]\+\).*/\1/p' src/H5public.h)
 vsubr=$(sed -ne 's/^#define H5_VERS_SUBRELEASE\s*\([^ \t]\+\).*/\1/p' src/H5public.h)
-for f in FindHDF5.cmake hdf5-config-version.cmake hdf5-config.cmake hdf5-targets.cmake hdf5-targets-noconfig.cmake ; do
-	sed -e 's,@HDF5_PACKAGE@,hdf5,' \
+for f in hdf5-config-version.cmake hdf5-config.cmake hdf5-targets.cmake hdf5-targets-noconfig.cmake ; do
+	sed -e 's,@HDF5_PACKAGE@,hdf5,g' \
 	    -e 's,@HDF_PACKAGE_EXT@,,' \
 	    -e "s,@HDF5_VERSION_STRING@,%{version}," \
 	    -e "s,@HDF5_VERSION_MAJOR@,1.8," \
@@ -252,6 +252,7 @@ for f in FindHDF5.cmake hdf5-config-version.cmake hdf5-config.cmake hdf5-targets
 	    -e 's,@ZLIB_PACKAGE_NAME@,zlib,' \
 	    -e 's,@SZIP_PACKAGE_NAME@,szip,' \
 	    -e 's,@HDF5_LIBRARIES_TO_EXPORT@,hdf5,' \
+	    -e 's,@CMAKE_GENERATOR_TOOLSET@,,' \
 	    -e 's,@lib@,%{_lib},' \
 	    %{?with_mpi:-e 's,@MPI_C_INCLUDE_PATH@,%{_includedir},'} \
 	    %{?with_mpi:-e 's,@MPI_C_LIBRARIES@,%{_libdir},'} \
@@ -351,7 +352,7 @@ rm -rf $RPM_BUILD_ROOT
 %files c++
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.12
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.15
 %attr(755,root,root) %{_libdir}/libhdf5_hl_cpp.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.11
 
@@ -385,6 +386,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5Group.h
 %{_includedir}/H5IdComponent.h
 %{_includedir}/H5IntType.h
+%{_includedir}/H5LaccProp.h
 %{_includedir}/H5Library.h
 %{_includedir}/H5Location.h
 %{_includedir}/H5Object.h

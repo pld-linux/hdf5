@@ -1,12 +1,13 @@
---- hdf5-1.8.15/configure.ac.orig	2015-05-20 17:40:38.246732231 +0200
-+++ hdf5-1.8.15/configure.ac	2015-05-20 17:41:46.156729379 +0200
-@@ -1643,10 +1643,15 @@
+--- hdf5-1.8.20/configure.ac.orig	2018-05-08 18:00:29.595517793 +0200
++++ hdf5-1.8.20/configure.ac	2018-05-08 18:02:35.958849694 +0200
+@@ -1585,11 +1585,16 @@
  AC_CHECK_FUNCS([alarm clock_gettime difftime fork frexpf frexpl])
- AC_CHECK_FUNCS([gethostname getpwuid getrusage gettimeofday])
+ AC_CHECK_FUNCS([gethostname getrusage gettimeofday])
  AC_CHECK_FUNCS([lstat rand_r random setsysinfo])
 -AC_CHECK_FUNCS([signal longjmp setjmp siglongjmp sigsetjmp sigprocmask])
 +AC_CHECK_FUNCS([signal longjmp setjmp siglongjmp sigprocmask])
  AC_CHECK_FUNCS([snprintf srandom strdup symlink system])
+ AC_CHECK_FUNCS([strtoll strtoull])
  AC_CHECK_FUNCS([tmpfile asprintf vasprintf vsnprintf waitpid])
  
 +dnl cannot be detected in glibc by plain AC_CHECK_FUNCS

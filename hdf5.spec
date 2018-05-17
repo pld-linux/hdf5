@@ -11,7 +11,7 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.20
-Release:	1
+Release:	2
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
@@ -220,7 +220,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/cmake/hdf5
 vmajor=$(sed -ne 's/^#define H5_VERS_MAJOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
 vminor=$(sed -ne 's/^#define H5_VERS_MINOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
 vrel=$(sed -ne 's/^#define H5_VERS_RELEASE\s*\([0-9]\+\).*/\1/p' src/H5public.h)
-vsubr=$(sed -ne 's/^#define H5_VERS_SUBRELEASE\s*\([^ \t]\+\).*/\1/p' src/H5public.h)
+vsubr=$(sed -ne 's/^#define H5_VERS_SUBRELEASE\s*"\?\([^" \t]\+\)"\?.*/\1/p' src/H5public.h)
 for f in hdf5-config-version.cmake hdf5-config.cmake hdf5-targets.cmake hdf5-targets-noconfig.cmake ; do
 	sed -e 's,@HDF5_PACKAGE@,hdf5,g' \
 	    -e 's,@HDF_PACKAGE_EXT@,,' \

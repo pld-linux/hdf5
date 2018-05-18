@@ -11,7 +11,7 @@ Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
 Version:	1.8.20
-Release:	2
+Release:	3
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
@@ -216,7 +216,7 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl
 %{__make} -C hl/c++/examples install-examples \
 	EXAMPLEDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl/c++
 
-install -d $RPM_BUILD_ROOT%{_datadir}/cmake/hdf5
+install -d $RPM_BUILD_ROOT%{_libdir}/cmake/hdf5
 vmajor=$(sed -ne 's/^#define H5_VERS_MAJOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
 vminor=$(sed -ne 's/^#define H5_VERS_MINOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
 vrel=$(sed -ne 's/^#define H5_VERS_RELEASE\s*\([0-9]\+\).*/\1/p' src/H5public.h)
@@ -259,7 +259,7 @@ for f in hdf5-config-version.cmake hdf5-config.cmake hdf5-targets.cmake hdf5-tar
 	    -e 's,@PACKAGE_INCLUDE_INSTALL_DIR@,%{_includedir},' \
 	    -e 's,@PACKAGE_SHARE_INSTALL_DIR@,%{_datadir}/cmake/hdf5,' \
 	    -e 's,@PACKAGE_CURRENT_BUILD_DIR@,%{_prefix},' \
-		config/cmake/${f}.in > $RPM_BUILD_ROOT%{_datadir}/cmake/hdf5/$f
+		config/cmake/${f}.in > $RPM_BUILD_ROOT%{_libdir}/cmake/hdf5/$f
 done
 
 %clean
@@ -335,7 +335,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/hdf5.h
 %{_includedir}/hdf5_hl.h
 
-%{_datadir}/cmake/hdf5
+%{_libdir}/cmake/hdf5
 %dir %{_examplesdir}/%{name}-%{version}
 %{_examplesdir}/%{name}-%{version}/README
 %{_examplesdir}/%{name}-%{version}/run-all-ex.sh

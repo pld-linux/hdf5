@@ -278,12 +278,12 @@
 +# Import target "hdf5::hdf5-shared" for configuration ""
 +set_property(TARGET hdf5::hdf5-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5-shared PROPERTIES
-+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5.so.1.8.20"
-+  IMPORTED_SONAME_NOCONFIG "libhdf5.so.10.3.1"
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5.so.10.3.1"
++  IMPORTED_SONAME_NOCONFIG "libhdf5.so.10"
 +  )
 +
 +list(APPEND _IMPORT_CHECK_TARGETS hdf5::hdf5-shared )
-+list(APPEND _IMPORT_CHECK_FILES_FOR_hdf5::hdf5-shared "${_IMPORT_PREFIX}/@lib@/libhdf5.so.1.8.20" )
++list(APPEND _IMPORT_CHECK_FILES_FOR_hdf5::hdf5-shared "${_IMPORT_PREFIX}/@lib@/libhdf5.so.10" )
 +
 +# Import target "hdf5::hdf5_tools-static" for configuration ""
 +set_property(TARGET hdf5::hdf5_tools-static APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
@@ -298,8 +298,8 @@
 +# Import target "hdf5::hdf5_tools-shared" for configuration ""
 +set_property(TARGET hdf5::hdf5_tools-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5_tools-shared PROPERTIES
-+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_tools.so.1.8.20"
-+  IMPORTED_SONAME_NOCONFIG "libhdf5_tools.so.10.3.1"
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_tools.so.10.3.1"
++  IMPORTED_SONAME_NOCONFIG "libhdf5_tools.so.10"
 +  )
 +
 +list(APPEND _IMPORT_CHECK_TARGETS hdf5::hdf5_tools-shared )
@@ -480,12 +480,12 @@
 +# Import target "hdf5::hdf5_hl-shared" for configuration ""
 +set_property(TARGET hdf5::hdf5_hl-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5_hl-shared PROPERTIES
-+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_hl.so.1.8.20"
-+  IMPORTED_SONAME_NOCONFIG "libhdf5_hl.so.10.3.1"
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_hl.so.10"
++  IMPORTED_SONAME_NOCONFIG "libhdf5_hl.so.10.2.1"
 +  )
 +
 +list(APPEND _IMPORT_CHECK_TARGETS hdf5::hdf5_hl-shared )
-+list(APPEND _IMPORT_CHECK_FILES_FOR_hdf5::hdf5_hl-shared "${_IMPORT_PREFIX}/@lib@/libhdf5_hl.so.1.8.20" )
++list(APPEND _IMPORT_CHECK_FILES_FOR_hdf5::hdf5_hl-shared "${_IMPORT_PREFIX}/@lib@/libhdf5_hl.so.10" )
 +
 +# Import target "hdf5::gif2h5" for configuration ""
 +set_property(TARGET hdf5::gif2h5 APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
@@ -518,12 +518,12 @@
 +# Import target "hdf5::hdf5_cpp-shared" for configuration ""
 +set_property(TARGET hdf5::hdf5_cpp-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5_cpp-shared PROPERTIES
-+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_cpp.so.1.8.20"
-+  IMPORTED_SONAME_NOCONFIG "libhdf5_cpp.so.10.3.1"
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_cpp.so.15.0.0"
++  IMPORTED_SONAME_NOCONFIG "libhdf5_cpp.so.15"
 +  )
 +
 +list(APPEND _IMPORT_CHECK_TARGETS hdf5::hdf5_cpp-shared )
-+list(APPEND _IMPORT_CHECK_FILES_FOR_hdf5::hdf5_cpp-shared "${_IMPORT_PREFIX}/@lib@/libhdf5_cpp.so.1.8.20" )
++list(APPEND _IMPORT_CHECK_FILES_FOR_hdf5::hdf5_cpp-shared "${_IMPORT_PREFIX}/@lib@/libhdf5_cpp.so.15" )
 +
 +# Import target "hdf5::hdf5_hl_cpp-static" for configuration ""
 +set_property(TARGET hdf5::hdf5_hl_cpp-static APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
@@ -538,12 +538,12 @@
 +# Import target "hdf5::hdf5_hl_cpp-shared" for configuration ""
 +set_property(TARGET hdf5::hdf5_hl_cpp-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5_hl_cpp-shared PROPERTIES
-+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_hl_cpp.so.1.8.20"
-+  IMPORTED_SONAME_NOCONFIG "libhdf5_hl_cpp.so.10.3.1"
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_hl_cpp.so.11.1.1"
++  IMPORTED_SONAME_NOCONFIG "libhdf5_hl_cpp.so.11"
 +  )
 +
 +list(APPEND _IMPORT_CHECK_TARGETS hdf5::hdf5_hl_cpp-shared )
-+list(APPEND _IMPORT_CHECK_FILES_FOR_hdf5::hdf5_hl_cpp-shared "${_IMPORT_PREFIX}/lib/libhdf5_hl_cpp-shared.so.1.8.20" )
++list(APPEND _IMPORT_CHECK_FILES_FOR_hdf5::hdf5_hl_cpp-shared "${_IMPORT_PREFIX}/lib/libhdf5_hl_cpp-shared.so.11" )
 +
 +# Commands beyond this point should not need to know the version.
 +set(CMAKE_IMPORT_FILE_VERSION)

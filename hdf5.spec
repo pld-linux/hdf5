@@ -10,12 +10,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.20
-Release:	5
+Version:	1.8.21
+Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	23078d57975903e9536d1e7b299cc39c
+# Source0-md5:	2d2408f2a9dfb5c7b79998002e9a90e9
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-sig.patch
 Patch2:		%{name}-cmake.patch
@@ -257,7 +257,7 @@ for f in hdf5-config-version.cmake hdf5-config.cmake hdf5-targets.cmake hdf5-tar
 	    %{?with_mpi:-e 's,@MPI_C_INCLUDE_PATH@,%{_includedir},'} \
 	    %{?with_mpi:-e 's,@MPI_C_LIBRARIES@,%{_libdir},'} \
 	    -e 's,@PACKAGE_INCLUDE_INSTALL_DIR@,%{_includedir},' \
-	    -e 's,@PACKAGE_SHARE_INSTALL_DIR@,%{_libdir}/cmake/hdf5,' \
+	    -e 's,@PACKAGE_SHARE_INSTALL_DIR@,%{_libdir}/cmake,' \
 	    -e 's,@PACKAGE_CURRENT_BUILD_DIR@,%{_prefix},' \
 		config/cmake/${f}.in > $RPM_BUILD_ROOT%{_libdir}/cmake/hdf5/$f
 done
@@ -352,7 +352,7 @@ rm -rf $RPM_BUILD_ROOT
 %files c++
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.15
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.16
 %attr(755,root,root) %{_libdir}/libhdf5_hl_cpp.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.11
 
@@ -364,6 +364,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libhdf5_cpp.la
 %{_libdir}/libhdf5_hl_cpp.la
 %{_includedir}/H5AbstractDs.h
+%{_includedir}/H5AcreatProp.h
 %{_includedir}/H5ArrayType.h
 %{_includedir}/H5AtomType.h
 %{_includedir}/H5Attribute.h
@@ -387,6 +388,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5IdComponent.h
 %{_includedir}/H5IntType.h
 %{_includedir}/H5LaccProp.h
+%{_includedir}/H5LcreatProp.h
 %{_includedir}/H5Library.h
 %{_includedir}/H5Location.h
 %{_includedir}/H5Object.h
@@ -395,6 +397,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5PredType.h
 %{_includedir}/H5PropList.h
 %{_includedir}/H5StrType.h
+%{_includedir}/H5StrcreatProp.h
 %{_includedir}/H5VarLenType.h
 %{_examplesdir}/%{name}-%{version}/c++
 %{_examplesdir}/%{name}-%{version}/hl/c++

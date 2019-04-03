@@ -10,15 +10,15 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.8.21
+Version:	1.10.5
 Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
-Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	2d2408f2a9dfb5c7b79998002e9a90e9
-Patch0:		%{name}-config.patch
-Patch1:		%{name}-sig.patch
-Patch2:		%{name}-cmake.patch
+Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	7c19d6b81ee2a3ba7d36f6922b2f90d3
+Patch0:		%{name}-sig.patch
+Patch1:		%{name}-cmake.patch
+Patch2:		%{name}-sh.patch
 URL:		https://support.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
@@ -184,16 +184,17 @@ Narzędzia do konwersji z i to formatu HDF5.
 %configure \
 	--docdir=%{_docdir} \
 	--disable-silent-rules \
+	--enable-build-node=production \
 	--enable-cxx \
 	--enable-fortran \
 	%{?with_fortran2003:--enable-fortran2003} \
 	%{?with_mpi:--enable-parallel --enable-unsupported} \
-	--enable-production \
 	--enable-shared \
+	--with-optimization="" \
 	--with-pthread \
 	%{?with_szip:--with-szlib}
 
-#	--enable-threadsafe is incompatible with cxx/fortran
+#	--enable-threadsafe is unspported with cxx/fortran/java/hl
 
 %{__make}
 
@@ -278,9 +279,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README.txt release_docs/{HISTORY*.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/libhdf5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.10
+%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.103
 %attr(755,root,root) %{_libdir}/libhdf5_hl.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.10
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.100
 # used to show configuration at runtime
 %{_libdir}/libhdf5.settings
 
@@ -309,11 +310,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5FDpublic.h
 %{_includedir}/H5FDsec2.h
 %{_includedir}/H5FDstdio.h
+%{_includedir}/H5FDwindows.h
 %{_includedir}/H5Fpublic.h
 %{_includedir}/H5Gpublic.h
 %{_includedir}/H5IMpublic.h
 %{_includedir}/H5Include.h
 %{_includedir}/H5Ipublic.h
+%{_includedir}/H5LDpublic.h
 %{_includedir}/H5LTpublic.h
 %{_includedir}/H5Lpublic.h
 %{_includedir}/H5MMpublic.h
@@ -352,9 +355,9 @@ rm -rf $RPM_BUILD_ROOT
 %files c++
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.16
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.103
 %attr(755,root,root) %{_libdir}/libhdf5_hl_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.11
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.100
 
 %files c++-devel
 %defattr(644,root,root,755)
@@ -364,7 +367,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libhdf5_cpp.la
 %{_libdir}/libhdf5_hl_cpp.la
 %{_includedir}/H5AbstractDs.h
-%{_includedir}/H5AcreatProp.h
 %{_includedir}/H5ArrayType.h
 %{_includedir}/H5AtomType.h
 %{_includedir}/H5Attribute.h
@@ -373,6 +375,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5CompType.h
 %{_includedir}/H5Cpp.h
 %{_includedir}/H5CppDoc.h
+%{_includedir}/H5DaccProp.h
 %{_includedir}/H5DataSet.h
 %{_includedir}/H5DataSpace.h
 %{_includedir}/H5DataType.h
@@ -397,7 +400,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5PredType.h
 %{_includedir}/H5PropList.h
 %{_includedir}/H5StrType.h
-%{_includedir}/H5StrcreatProp.h
 %{_includedir}/H5VarLenType.h
 %{_examplesdir}/%{name}-%{version}/c++
 %{_examplesdir}/%{name}-%{version}/hl/c++
@@ -410,66 +412,62 @@ rm -rf $RPM_BUILD_ROOT
 %files fortran
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_fortran.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.10
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.102
 %attr(755,root,root) %{_libdir}/libhdf5hl_fortran.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.10
+%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.100
 
 %files fortran-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/h5fc
 %attr(755,root,root) %{_libdir}/libhdf5_fortran.so
+%attr(755,root,root) %{_libdir}/libhdf5_hl_fortran.so
 %attr(755,root,root) %{_libdir}/libhdf5hl_fortran.so
 %{_libdir}/libhdf5_fortran.la
 %{_libdir}/libhdf5hl_fortran.la
 %{_includedir}/H5f90i.h
 %{_includedir}/H5f90i_gen.h
-%{_includedir}/h5_dble_interface.mod
+%{_includedir}/h5_gen.mod
 %{_includedir}/h5a.mod
-%{_includedir}/h5a_provisional.mod
 %{_includedir}/h5d.mod
-%{_includedir}/h5d_provisional.mod
 %{_includedir}/h5ds.mod
 %{_includedir}/h5e.mod
-%{_includedir}/h5e_provisional.mod
 %{_includedir}/h5f.mod
-%{_includedir}/h5f_provisional.mod
+%{_includedir}/h5fortkit.mod
 %{_includedir}/h5fortran_types.mod
 %{_includedir}/h5g.mod
 %{_includedir}/h5global.mod
 %{_includedir}/h5i.mod
 %{_includedir}/h5im.mod
 %{_includedir}/h5l.mod
-%{_includedir}/h5l_provisional.mod
 %{_includedir}/h5lib.mod
-%{_includedir}/h5lib_provisional.mod
 %{_includedir}/h5lt.mod
+%{_includedir}/h5lt_const.mod
 %{_includedir}/h5o.mod
-%{_includedir}/h5o_provisional.mod
 %{_includedir}/h5p.mod
-%{_includedir}/h5p_provisional.mod
 %{_includedir}/h5r.mod
-%{_includedir}/h5r_provisional.mod
 %{_includedir}/h5s.mod
 %{_includedir}/h5t.mod
-%{_includedir}/h5t_provisional.mod
 %{_includedir}/h5tb.mod
-%{_includedir}/h5test_kind_storage_size_mod.mod
+%{_includedir}/h5tb_const.mod
 %{_includedir}/h5z.mod
 %{_includedir}/hdf5.mod
 
 %files fortran-static
 %defattr(644,root,root,755)
 %{_libdir}/libhdf5_fortran.a
+%{_libdir}/libhdf5_hl_fortran.a
 %{_libdir}/libhdf5hl_fortran.a
 
 %files progs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/gif2h5
 %attr(755,root,root) %{_bindir}/h52gif
+%attr(755,root,root) %{_bindir}/h5clear
 %attr(755,root,root) %{_bindir}/h5copy
 %attr(755,root,root) %{_bindir}/h5debug
 %attr(755,root,root) %{_bindir}/h5diff
 %attr(755,root,root) %{_bindir}/h5dump
+%attr(755,root,root) %{_bindir}/h5format_convert
 %attr(755,root,root) %{_bindir}/h5import
 %attr(755,root,root) %{_bindir}/h5jam
 %attr(755,root,root) %{_bindir}/h5ls
@@ -480,3 +478,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/h5repart
 %attr(755,root,root) %{_bindir}/h5stat
 %attr(755,root,root) %{_bindir}/h5unjam
+%attr(755,root,root) %{_bindir}/h5watch

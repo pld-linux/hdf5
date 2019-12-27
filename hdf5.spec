@@ -3,30 +3,33 @@
 # - check missing file
 #
 # Conditional build:
-%bcond_without	fortran2003	# Fortran 2003 interface
+%bcond_with	hdfs		# HDFS driver (requires libhdfs, hdfs.h)
+%bcond_without	s3		# R/O S3 driver
 %bcond_without	szip		# SZIP compression support
 %bcond_with	mpi		# parallel version of library using MPI
 #
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.10.5
+Version:	1.10.6
 Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	7c19d6b81ee2a3ba7d36f6922b2f90d3
+# Source0-md5:	03095102a6118c32a75a9b9b40be66f2
 Patch0:		%{name}-sig.patch
 Patch1:		%{name}-cmake.patch
 Patch2:		%{name}-sh.patch
 URL:		https://support.hdfgroup.org/HDF5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	gcc-fortran >= %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4.0}
+%{?with_s3:BuildRequires:	curl-devel}
+BuildRequires:	gcc-fortran >= 6:4.2
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
 %{?with_mpi:BuildRequires:	mpi-devel}
+%{?with_s3:BuildRequires:	openssl-devel}
 %{?with_szip:BuildRequires:	szip-devel >= 2.0}
 BuildRequires:	zlib-devel >= 1.1.3
 Obsoletes:	hdf5_hl
@@ -51,6 +54,8 @@ Summary:	HDF5 library development package
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HDF5
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+%{?with_s3:Requires:	curl-devel}
+%{?with_s3:Requires:	openssl-devel}
 %{?with_szip:Requires:	szip-devel >= 2.0}
 Requires:	zlib-devel
 Obsoletes:	hdf5_hl-devel
@@ -134,7 +139,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe API Fortran bibliotek HDF5
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-fortran = %{version}-%{release}
-Requires:	gcc-fortran >= %{?with_fortran2003:6:4.2}%{!?with_fortran2003:5:4.0}
+Requires:	gcc-fortran >= 6:4.2
 
 %description fortran-devel
 Module and header files for HDF5 Fortran APIs (both base hdf5 and
@@ -184,13 +189,13 @@ Narzędzia do konwersji z i to formatu HDF5.
 %configure \
 	--docdir=%{_docdir} \
 	--disable-silent-rules \
-	--enable-build-node=production \
 	--enable-cxx \
+	--enable-direct-vfd \
 	--enable-fortran \
-	%{?with_fortran2003:--enable-fortran2003} \
 	%{?with_mpi:--enable-parallel --enable-unsupported} \
+	%{?with_s3:--enable-ros3-vfd} \
 	--enable-shared \
-	--with-optimization="" \
+	%{?with_hdfs:--with-libhdfs=%{_includedir},%{_libdir}} \
 	--with-pthread \
 	%{?with_szip:--with-szlib}
 
@@ -234,7 +239,6 @@ for f in hdf5-config-version.cmake hdf5-config.cmake hdf5-targets.cmake hdf5-tar
 	    -e "s,@H5_VERS_SUBRELEASE@,$vsubr," \
 	    -e 's,@HDF5_ENABLE_PARALLEL@,OFF,' \
 	    -e 's,@HDF5_BUILD_FORTRAN@,ON,' \
-	    -e 's,@HDF5_ENABLE_F2003@,%{?with_fortran2003:ON}%{!?with_fortran2003:OFF},' \
 	    -e 's,@HDF5_BUILD_CPP_LIB@,ON,' \
 	    -e 's,@HDF5_BUILD_TOOLS@,ON,' \
 	    -e 's,@HDF5_BUILD_HL_LIB@,ON,' \
@@ -303,11 +307,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5FDcore.h
 %{_includedir}/H5FDdirect.h
 %{_includedir}/H5FDfamily.h
+%{_includedir}/H5FDhdfs.h
 %{_includedir}/H5FDlog.h
 %{_includedir}/H5FDmpi.h
 %{_includedir}/H5FDmpio.h
 %{_includedir}/H5FDmulti.h
 %{_includedir}/H5FDpublic.h
+%{_includedir}/H5FDros3.h
 %{_includedir}/H5FDsec2.h
 %{_includedir}/H5FDstdio.h
 %{_includedir}/H5FDwindows.h

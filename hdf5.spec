@@ -4,6 +4,7 @@
 #
 # Conditional build:
 %bcond_with	hdfs		# HDFS driver (requires libhdfs, hdfs.h)
+%bcond_without	java		# Java wrappers
 %bcond_without	s3		# R/O S3 driver
 %bcond_without	szip		# SZIP compression support
 %bcond_with	mpi		# parallel version of library using MPI
@@ -174,6 +175,34 @@ Utilities to convert from/to HDF5 format.
 %description progs -l pl.UTF-8
 Narzędzia do konwersji z i to formatu HDF5.
 
+%package -n java-hdf5
+Summary:	Java HDF5 Interface (JHI5)
+Summary(pl.UTF-8):	Interfejs HDF5 do Javy (JHI5)
+# to replace java-hdf5 [0:]2.11/3.3.1 from hdf-java.spec
+Epoch:		1
+Group:		Libraries/Java
+URL:		http://portal.hdfgroup.org/display/HDFVIEW/JHI5+Design+Notes
+Requires:	java-slf4j >= 1.7.25
+
+%description -n java-hdf5
+The Java Native Interface to the standard HDF5 library.
+
+%description -n java-hdf5 -l pl.UTF-8
+Natywny interfejs Javy (JNI) do biblioteki standardowej HDF5.
+
+%package -n java-hdf5-javadoc
+Summary:	Javadoc documentation for Java HDF5 Interface (JHI5)
+Summary(pl.UTF-8):	Dokumentacja javadoc do interfejsu HDF5 do Javy (JHI5)
+Epoch:		1
+Group:		Documentation
+URL:		http://portal.hdfgroup.org/display/HDFVIEW/JHI5+Design+Notes
+
+%description -n java-hdf5-javadoc
+Javadoc documentation for Java HDF5 Interface (JHI5).
+
+%description -n java-hdf5-javadoc -l pl.UTF-8
+Dokumentacja javadoc do interfejsu HDF5 do Javy (JHI5).
+
 %prep
 %setup -q
 %patch0 -p1
@@ -192,6 +221,7 @@ Narzędzia do konwersji z i to formatu HDF5.
 	--enable-cxx \
 	--enable-direct-vfd \
 	--enable-fortran \
+	%{?with_java:--enable-java} \
 	%{?with_mpi:--enable-parallel --enable-unsupported} \
 	%{?with_s3:--enable-ros3-vfd} \
 	--enable-shared \
@@ -208,7 +238,15 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_includedir}
 
 %{__make} install-recursive \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	hdf5_javadir=%{_javadir}
+
+%if %{with java}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libhdf5_java.la
+ln -sf jarhdf5-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jarhdf5.jar
+install -d $RPM_BUILD_ROOT%{_javadocdir}
+cp -pr java/src/javadoc $RPM_BUILD_ROOT%{_javadocdir}/hdf5lib
+%endif
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl
 %{__make} -C examples install-examples \
@@ -489,3 +527,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/h5watch
 %attr(755,root,root) %{_bindir}/mirror_server
 %attr(755,root,root) %{_bindir}/mirror_server_stop
+
+%if %{with java}
+%files -n java-hdf5
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libhdf5_java.so
+%{_javadir}/jarhdf5-%{version}.jar
+%{_javadir}/jarhdf5.jar
+
+%files -n java-hdf5-javadoc
+%defattr(644,root,root,755)
+%{_javadocdir}/hdf5lib
+%endif

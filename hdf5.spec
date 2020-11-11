@@ -11,12 +11,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.10.6
-Release:	2
+Version:	1.10.7
+Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	03095102a6118c32a75a9b9b40be66f2
+# Source0-md5:	dff8a882b61d0b59296dccc3ad13dc29
 Patch0:		%{name}-sig.patch
 Patch1:		%{name}-cmake.patch
 Patch2:		%{name}-sh.patch
@@ -309,12 +309,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5FDfamily.h
 %{_includedir}/H5FDhdfs.h
 %{_includedir}/H5FDlog.h
+%{_includedir}/H5FDmirror.h
 %{_includedir}/H5FDmpi.h
 %{_includedir}/H5FDmpio.h
 %{_includedir}/H5FDmulti.h
 %{_includedir}/H5FDpublic.h
 %{_includedir}/H5FDros3.h
 %{_includedir}/H5FDsec2.h
+%{_includedir}/H5FDsplitter.h
 %{_includedir}/H5FDstdio.h
 %{_includedir}/H5FDwindows.h
 %{_includedir}/H5Fpublic.h
@@ -485,3 +487,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/h5stat
 %attr(755,root,root) %{_bindir}/h5unjam
 %attr(755,root,root) %{_bindir}/h5watch
+%attr(755,root,root) %{_bindir}/mirror_server
+%attr(755,root,root) %{_bindir}/mirror_server_stop

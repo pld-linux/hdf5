@@ -26,6 +26,7 @@ BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
 %{?with_s3:BuildRequires:	curl-devel}
 BuildRequires:	gcc-fortran >= 6:4.2
+%{?with_java:BuildRequires:	jdk}
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2

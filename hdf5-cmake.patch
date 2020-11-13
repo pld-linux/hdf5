@@ -1,6 +1,6 @@
 --- hdf5-1.8.16/config/cmake/hdf5-config.cmake.in.orig	2015-10-24 07:14:03.000000000 +0200
 +++ hdf5-1.8.16/config/cmake/hdf5-config.cmake.in	2015-11-26 21:14:53.838328233 +0100
-@@ -1,7 +1,6 @@
+@@ -12,7 +12,6 @@
  #-----------------------------------------------------------------------------
  # HDF5 Config file for compiling against hdf5 build/install directory
  #-----------------------------------------------------------------------------
@@ -8,8 +8,8 @@
  
  string(TOUPPER @HDF5_PACKAGE@ HDF5_PACKAGE_NAME)
  
-@@ -47,7 +46,7 @@
- set (${HDF5_PACKAGE_NAME}_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@" "${${HDF5_PACKAGE_NAME}_MPI_C_INCLUDE_PATH}")
+@@ -79,7 +78,7 @@
+ set (${HDF5_PACKAGE_NAME}_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@" "${${HDF5_PACKAGE_NAME}_MPI_C_INCLUDE_DIRS}")
  
  set (${HDF5_PACKAGE_NAME}_SHARE_DIR "@PACKAGE_SHARE_INSTALL_DIR@")
 -set_and_check (${HDF5_PACKAGE_NAME}_BUILD_DIR "@PACKAGE_CURRENT_BUILD_DIR@")
@@ -17,7 +17,7 @@
  
  if (${HDF5_PACKAGE_NAME}_BUILD_CPP_LIB)
    set (${HDF5_PACKAGE_NAME}_INCLUDE_DIR_CPP "@PACKAGE_INCLUDE_INSTALL_DIR@")
-@@ -63,7 +62,7 @@
+@@ -95,7 +94,7 @@
  
  if (${HDF5_PACKAGE_NAME}_BUILD_TOOLS)
    set (${HDF5_PACKAGE_NAME}_INCLUDE_DIR_TOOLS "@PACKAGE_INCLUDE_INSTALL_DIR@")
@@ -26,7 +26,7 @@
  endif ()
  
  #-----------------------------------------------------------------------------
-@@ -154,7 +153,3 @@
+@@ -205,7 +204,3 @@
      endif ()
    endforeach ()
  endforeach ()

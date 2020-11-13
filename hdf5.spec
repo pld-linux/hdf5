@@ -183,6 +183,7 @@ Summary(pl.UTF-8):	Interfejs HDF5 do Javy (JHI5)
 Epoch:		1
 Group:		Libraries/Java
 URL:		http://portal.hdfgroup.org/display/HDFVIEW/JHI5+Design+Notes
+Requires:	%{name} = %{version}-%{release}
 Requires:	java-slf4j >= 1.7.25
 
 %description -n java-hdf5

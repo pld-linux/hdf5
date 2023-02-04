@@ -12,12 +12,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.10.7
-Release:	4
+Version:	1.10.9
+Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	dff8a882b61d0b59296dccc3ad13dc29
+# Source0-md5:	8f9eac14d3ee4719c3e4b52863ea42e9
 Patch0:		%{name}-sig.patch
 Patch1:		%{name}-cmake.patch
 Patch2:		%{name}-sh.patch
@@ -34,7 +34,7 @@ BuildRequires:	libtool >= 2:2.2
 %{?with_s3:BuildRequires:	openssl-devel}
 %{?with_szip:BuildRequires:	szip-devel >= 2.0}
 BuildRequires:	zlib-devel >= 1.1.3
-Obsoletes:	hdf5_hl
+Obsoletes:	hdf5_hl < 5180
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -60,8 +60,8 @@ Requires:	%{name} = %{version}-%{release}
 %{?with_s3:Requires:	openssl-devel}
 %{?with_szip:Requires:	szip-devel >= 2.0}
 Requires:	zlib-devel
-Obsoletes:	hdf5_hl-devel
-Obsoletes:	hdf5_hl-tutor
+Obsoletes:	hdf5_hl-devel < 5180
+Obsoletes:	hdf5_hl-tutor < 5180
 
 %description devel
 Header files for HDF5 library and HDF5 documentation.
@@ -74,7 +74,7 @@ Summary:	HDF5 static library
 Summary(pl.UTF-8):	Statyczna biblioteka HDF5
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Obsoletes:	hdf5_hl-static
+Obsoletes:	hdf5_hl-static < 5180
 
 %description static
 Static version of HDF5 library.
@@ -319,9 +319,12 @@ rm -rf $RPM_BUILD_ROOT
 %post	fortran -p /sbin/ldconfig
 %postun	fortran -p /sbin/ldconfig
 
+%post	-n java-hdf5 -p /sbin/ldconfig
+%postun	-n java-hdf5 -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
-%doc COPYING README.txt release_docs/{HISTORY*.txt,RELEASE.txt}
+%doc COPYING README.md release_docs/{HISTORY*.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/libhdf5.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libhdf5.so.103
 %attr(755,root,root) %{_libdir}/libhdf5_hl.so.*.*.*
@@ -527,12 +530,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/h5stat
 %attr(755,root,root) %{_bindir}/h5unjam
 %attr(755,root,root) %{_bindir}/h5watch
-%attr(755,root,root) %{_bindir}/mirror_server
-%attr(755,root,root) %{_bindir}/mirror_server_stop
 
 %if %{with java}
 %files -n java-hdf5
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libhdf5_java.so.100.7.0
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_java.so.100
 %attr(755,root,root) %{_libdir}/libhdf5_java.so
 %{_javadir}/jarhdf5-%{version}.jar
 %{_javadir}/jarhdf5.jar

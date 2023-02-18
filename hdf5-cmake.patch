@@ -287,7 +287,7 @@
 +# Import target "hdf5::hdf5-shared" for configuration ""
 +set_property(TARGET hdf5::hdf5-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5-shared PROPERTIES
-+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5.so.103.3.0"
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5.so.103.3.2"
 +  IMPORTED_SONAME_NOCONFIG "libhdf5.so.103"
 +  )
 +
@@ -490,7 +490,7 @@
 +set_property(TARGET hdf5::hdf5_hl-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5_hl-shared PROPERTIES
 +  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_hl.so.100"
-+  IMPORTED_SONAME_NOCONFIG "libhdf5_hl.so.100.1.4"
++  IMPORTED_SONAME_NOCONFIG "libhdf5_hl.so.100.1.6"
 +  )
 +
 +list(APPEND _IMPORT_CHECK_TARGETS hdf5::hdf5_hl-shared )
@@ -527,7 +527,7 @@
 +# Import target "hdf5::hdf5_cpp-shared" for configuration ""
 +set_property(TARGET hdf5::hdf5_cpp-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5_cpp-shared PROPERTIES
-+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_cpp.so.103.3.0"
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_cpp.so.103.4.1"
 +  IMPORTED_SONAME_NOCONFIG "libhdf5_cpp.so.103"
 +  )
 +
@@ -547,7 +547,7 @@
 +# Import target "hdf5::hdf5_hl_cpp-shared" for configuration ""
 +set_property(TARGET hdf5::hdf5_hl_cpp-shared APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 +set_target_properties(hdf5::hdf5_hl_cpp-shared PROPERTIES
-+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_hl_cpp.so.100.1.5"
++  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/@lib@/libhdf5_hl_cpp.so.100.1.7"
 +  IMPORTED_SONAME_NOCONFIG "libhdf5_hl_cpp.so.100"
 +  )
 +

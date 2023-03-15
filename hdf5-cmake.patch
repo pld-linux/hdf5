@@ -26,15 +26,6 @@
  endif ()
  
  #-----------------------------------------------------------------------------
-@@ -118,7 +117,7 @@
-   if (${HDF5_PACKAGE_NAME}_ENABLE_SZIP_SUPPORT AND ${HDF5_PACKAGE_NAME}_PACKAGE_EXTLIBS)
-     include (@PACKAGE_SHARE_INSTALL_DIR@/@SZIP_PACKAGE_NAME@@HDF_PACKAGE_EXT@-targets.cmake)
-   endif ()
--  include (@PACKAGE_SHARE_INSTALL_DIR@/@HDF5_PACKAGE@@HDF_PACKAGE_EXT@-targets.cmake)
-+  include (@PACKAGE_SHARE_INSTALL_DIR@/@HDF5_PACKAGE@/@HDF5_PACKAGE@@HDF_PACKAGE_EXT@-targets.cmake)
- endif ()
- 
- # Handle default component(static) :
 @@ -208,7 +207,3 @@
      endif ()
    endforeach ()

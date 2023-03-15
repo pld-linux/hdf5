@@ -21,7 +21,7 @@ Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-%{version
 Patch0:		%{name}-sig.patch
 Patch1:		%{name}-cmake.patch
 Patch2:		%{name}-sh.patch
-URL:		https://support.hdfgroup.org/HDF5/
+URL:		https://www.hdfgroup.org/solutions/hdf5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
 %{?with_s3:BuildRequires:	curl-devel}
@@ -271,7 +271,7 @@ for f in hdf5-config-version.cmake hdf5-config.cmake hdf5-targets.cmake hdf5-tar
 	sed -e 's,@HDF5_PACKAGE@,hdf5,g' \
 	    -e 's,@HDF_PACKAGE_EXT@,,' \
 	    -e "s,@HDF5_VERSION_STRING@,%{version}," \
-	    -e "s,@HDF5_VERSION_MAJOR@,1.8," \
+	    -e "s,@HDF5_VERSION_MAJOR@,1.10," \
 	    -e "s,@HDF5_VERSION_MINOR@,$vrel," \
 	    -e "s,@H5_VERS_MAJOR@,$vmajor," \
 	    -e "s,@H5_VERS_MINOR@,$vminor," \
@@ -302,7 +302,7 @@ for f in hdf5-config-version.cmake hdf5-config.cmake hdf5-targets.cmake hdf5-tar
 	    %{?with_mpi:-e 's,@MPI_C_INCLUDE_PATH@,%{_includedir},'} \
 	    %{?with_mpi:-e 's,@MPI_C_LIBRARIES@,%{_libdir},'} \
 	    -e 's,@PACKAGE_INCLUDE_INSTALL_DIR@,%{_includedir},' \
-	    -e 's,@PACKAGE_SHARE_INSTALL_DIR@,%{_libdir}/cmake,' \
+	    -e 's,@PACKAGE_SHARE_INSTALL_DIR@,%{_libdir}/cmake/hdf5,' \
 	    -e 's,@PACKAGE_CURRENT_BUILD_DIR@,%{_prefix},' \
 		config/cmake/${f}.in > $RPM_BUILD_ROOT%{_libdir}/cmake/hdf5/$f
 done

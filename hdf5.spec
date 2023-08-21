@@ -12,12 +12,12 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.10.9
-Release:	3
+Version:	1.10.10
+Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	8f9eac14d3ee4719c3e4b52863ea42e9
+# Source0-md5:	ea3078eca38884da6bb6d61575c236b3
 Patch0:		%{name}-sig.patch
 Patch1:		%{name}-cmake.patch
 Patch2:		%{name}-sh.patch
@@ -511,8 +511,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/gif2h5
-%attr(755,root,root) %{_bindir}/h52gif
 %attr(755,root,root) %{_bindir}/h5clear
 %attr(755,root,root) %{_bindir}/h5copy
 %attr(755,root,root) %{_bindir}/h5debug
@@ -534,7 +532,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with java}
 %files -n java-hdf5
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libhdf5_java.so.100.7.0
+%attr(755,root,root) %{_libdir}/libhdf5_java.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libhdf5_java.so.100
 %attr(755,root,root) %{_libdir}/libhdf5_java.so
 %{_javadir}/jarhdf5-%{version}.jar

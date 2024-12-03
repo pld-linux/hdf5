@@ -12,15 +12,13 @@
 Summary:	Hierarchical Data Format 5 library
 Summary(pl.UTF-8):	Biblioteka HDF5 (Hierarchical Data Format 5)
 Name:		hdf5
-Version:	1.10.10
+Version:	1.14.5
 Release:	1
 License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
-Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	ea3078eca38884da6bb6d61575c236b3
-Patch0:		%{name}-sig.patch
+Source0:	https://support.hdfgroup.org/releases/hdf5/v1_14/v1_14_5/downloads/%{name}-%{version}.tar.gz
+# Source0-md5:	600d29af6ccb7f1e3401560e1422ba5e
 Patch1:		%{name}-cmake.patch
-Patch2:		%{name}-sh.patch
 URL:		https://www.hdfgroup.org/solutions/hdf5/
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake >= 1:1.11
@@ -185,6 +183,7 @@ Group:		Libraries/Java
 URL:		http://portal.hdfgroup.org/display/HDFVIEW/JHI5+Design+Notes
 Requires:	%{name} = %{version}-%{release}
 Requires:	java-slf4j >= 1.7.25
+Obsoletes:	java-hdf5-javadoc < 1.14.5
 
 %description -n java-hdf5
 The Java Native Interface to the standard HDF5 library.
@@ -192,24 +191,12 @@ The Java Native Interface to the standard HDF5 library.
 %description -n java-hdf5 -l pl.UTF-8
 Natywny interfejs Javy (JNI) do biblioteki standardowej HDF5.
 
-%package -n java-hdf5-javadoc
-Summary:	Javadoc documentation for Java HDF5 Interface (JHI5)
-Summary(pl.UTF-8):	Dokumentacja javadoc do interfejsu HDF5 do Javy (JHI5)
-Epoch:		1
-Group:		Documentation
-URL:		http://portal.hdfgroup.org/display/HDFVIEW/JHI5+Design+Notes
-
-%description -n java-hdf5-javadoc
-Javadoc documentation for Java HDF5 Interface (JHI5).
-
-%description -n java-hdf5-javadoc -l pl.UTF-8
-Dokumentacja javadoc do interfejsu HDF5 do Javy (JHI5).
-
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
+
+%{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+bash(\s|$),#!/bin/bash\\1,' \
+	utils/subfiling_vfd/h5fuse.in
 
 %build
 %{__libtoolize}
@@ -246,21 +233,7 @@ install -d $RPM_BUILD_ROOT%{_includedir}
 %if %{with java}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libhdf5_java.la
 ln -sf jarhdf5-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jarhdf5.jar
-install -d $RPM_BUILD_ROOT%{_javadocdir}
-cp -pr java/src/javadoc $RPM_BUILD_ROOT%{_javadocdir}/hdf5lib
 %endif
-
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl
-%{__make} -C examples install-examples \
-	EXAMPLEDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/c \
-	EXAMPLETOPDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-%{__make} -C c++/examples install-examples \
-	EXAMPLEDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/c++
-%{__make} -C hl/examples install-examples \
-	EXAMPLEDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl/c \
-	EXAMPLETOPDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl
-%{__make} -C hl/c++/examples install-examples \
-	EXAMPLEDIR=$RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/hl/c++
 
 install -d $RPM_BUILD_ROOT%{_libdir}/cmake/hdf5
 vmajor=$(sed -ne 's/^#define H5_VERS_MAJOR\s*\([0-9]\+\).*/\1/p' src/H5public.h)
@@ -326,9 +299,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYING README.md release_docs/{HISTORY*.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/libhdf5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.103
+%attr(755,root,root) %ghost %{_libdir}/libhdf5.so.310
 %attr(755,root,root) %{_libdir}/libhdf5_hl.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.100
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl.so.310
 # used to show configuration at runtime
 %{_libdir}/libhdf5.settings
 
@@ -343,45 +316,63 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5Apublic.h
 %{_includedir}/H5Cpublic.h
 %{_includedir}/H5DOpublic.h
-%{_includedir}/H5DSpublic.h
 %{_includedir}/H5Dpublic.h
+%{_includedir}/H5DSpublic.h
 %{_includedir}/H5Epubgen.h
 %{_includedir}/H5Epublic.h
+%{_includedir}/H5ESdevelop.h
+%{_includedir}/H5ESpublic.h
 %{_includedir}/H5FDcore.h
+%{_includedir}/H5FDdevelop.h
 %{_includedir}/H5FDdirect.h
 %{_includedir}/H5FDfamily.h
 %{_includedir}/H5FDhdfs.h
+%{_includedir}/H5FDioc.h
 %{_includedir}/H5FDlog.h
 %{_includedir}/H5FDmirror.h
 %{_includedir}/H5FDmpi.h
 %{_includedir}/H5FDmpio.h
 %{_includedir}/H5FDmulti.h
+%{_includedir}/H5FDonion.h
 %{_includedir}/H5FDpublic.h
 %{_includedir}/H5FDros3.h
 %{_includedir}/H5FDsec2.h
 %{_includedir}/H5FDsplitter.h
 %{_includedir}/H5FDstdio.h
+%{_includedir}/H5FDsubfiling.h
 %{_includedir}/H5FDwindows.h
 %{_includedir}/H5Fpublic.h
 %{_includedir}/H5Gpublic.h
+%{_includedir}/H5Idevelop.h
 %{_includedir}/H5IMpublic.h
 %{_includedir}/H5Include.h
 %{_includedir}/H5Ipublic.h
+%{_includedir}/H5Ldevelop.h
 %{_includedir}/H5LDpublic.h
-%{_includedir}/H5LTpublic.h
 %{_includedir}/H5Lpublic.h
+%{_includedir}/H5LTpublic.h
 %{_includedir}/H5MMpublic.h
+%{_includedir}/H5Mpublic.h
 %{_includedir}/H5Opublic.h
-%{_includedir}/H5PTpublic.h
-%{_includedir}/H5Ppublic.h
 %{_includedir}/H5PLextern.h
 %{_includedir}/H5PLpublic.h
+%{_includedir}/H5Ppublic.h
+%{_includedir}/H5PTpublic.h
 %{_includedir}/H5Rpublic.h
 %{_includedir}/H5Spublic.h
 %{_includedir}/H5TBpublic.h
+%{_includedir}/H5Tdevelop.h
 %{_includedir}/H5Tpublic.h
+%{_includedir}/H5TSdevelop.h
+%{_includedir}/H5VLconnector.h
+%{_includedir}/H5VLconnector_passthru.h
+%{_includedir}/H5VLnative.h
+%{_includedir}/H5VLpassthru.h
+%{_includedir}/H5VLpublic.h
+%{_includedir}/H5Zdevelop.h
 %{_includedir}/H5Zpublic.h
 %{_includedir}/H5api_adpt.h
+%{_includedir}/H5config_f.inc
 %{_includedir}/H5overflow.h
 %{_includedir}/H5pubconf.h
 %{_includedir}/H5public.h
@@ -390,13 +381,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/hdf5_hl.h
 
 %{_libdir}/cmake/hdf5
-%dir %{_examplesdir}/%{name}-%{version}
-%{_examplesdir}/%{name}-%{version}/README
-%{_examplesdir}/%{name}-%{version}/run-all-ex.sh
-%{_examplesdir}/%{name}-%{version}/c
-%dir %{_examplesdir}/%{name}-%{version}/hl
-%{_examplesdir}/%{name}-%{version}/hl/run-hl-ex.sh
-%{_examplesdir}/%{name}-%{version}/hl/c
 
 %files static
 %defattr(644,root,root,755)
@@ -406,9 +390,9 @@ rm -rf $RPM_BUILD_ROOT
 %files c++
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.103
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_cpp.so.310
 %attr(755,root,root) %{_libdir}/libhdf5_hl_cpp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.100
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_hl_cpp.so.310
 
 %files c++-devel
 %defattr(644,root,root,755)
@@ -452,8 +436,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5PropList.h
 %{_includedir}/H5StrType.h
 %{_includedir}/H5VarLenType.h
-%{_examplesdir}/%{name}-%{version}/c++
-%{_examplesdir}/%{name}-%{version}/hl/c++
 
 %files c++-static
 %defattr(644,root,root,755)
@@ -463,9 +445,9 @@ rm -rf $RPM_BUILD_ROOT
 %files fortran
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libhdf5_fortran.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.102
+%attr(755,root,root) %ghost %{_libdir}/libhdf5_fortran.so.310
 %attr(755,root,root) %{_libdir}/libhdf5hl_fortran.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.100
+%attr(755,root,root) %ghost %{_libdir}/libhdf5hl_fortran.so.310
 
 %files fortran-devel
 %defattr(644,root,root,755)
@@ -477,31 +459,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libhdf5hl_fortran.la
 %{_includedir}/H5f90i.h
 %{_includedir}/H5f90i_gen.h
-%{_includedir}/h5_gen.mod
-%{_includedir}/h5a.mod
-%{_includedir}/h5d.mod
-%{_includedir}/h5ds.mod
-%{_includedir}/h5e.mod
-%{_includedir}/h5f.mod
-%{_includedir}/h5fortkit.mod
-%{_includedir}/h5fortran_types.mod
-%{_includedir}/h5g.mod
-%{_includedir}/h5global.mod
-%{_includedir}/h5i.mod
-%{_includedir}/h5im.mod
-%{_includedir}/h5l.mod
-%{_includedir}/h5lib.mod
-%{_includedir}/h5lt.mod
-%{_includedir}/h5lt_const.mod
-%{_includedir}/h5o.mod
-%{_includedir}/h5p.mod
-%{_includedir}/h5r.mod
-%{_includedir}/h5s.mod
-%{_includedir}/h5t.mod
-%{_includedir}/h5tb.mod
-%{_includedir}/h5tb_const.mod
-%{_includedir}/h5z.mod
-%{_includedir}/hdf5.mod
+%{_includedir}/*.mod
 
 %files fortran-static
 %defattr(644,root,root,755)
@@ -514,9 +472,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/h5clear
 %attr(755,root,root) %{_bindir}/h5copy
 %attr(755,root,root) %{_bindir}/h5debug
+%attr(755,root,root) %{_bindir}/h5delete
 %attr(755,root,root) %{_bindir}/h5diff
 %attr(755,root,root) %{_bindir}/h5dump
 %attr(755,root,root) %{_bindir}/h5format_convert
+%attr(755,root,root) %{_bindir}/h5fuse
 %attr(755,root,root) %{_bindir}/h5import
 %attr(755,root,root) %{_bindir}/h5jam
 %attr(755,root,root) %{_bindir}/h5ls
@@ -532,13 +492,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with java}
 %files -n java-hdf5
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libhdf5_java.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libhdf5_java.so.100
 %attr(755,root,root) %{_libdir}/libhdf5_java.so
 %{_javadir}/jarhdf5-%{version}.jar
 %{_javadir}/jarhdf5.jar
-
-%files -n java-hdf5-javadoc
-%defattr(644,root,root,755)
-%{_javadocdir}/hdf5lib
 %endif

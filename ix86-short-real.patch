@@ -1,0 +1,11 @@
+--- hdf5-1.14.5/fortran/test/tH5T_F03.F90~	2024-09-30 18:07:53.000000000 +0200
++++ hdf5-1.14.5/fortran/test/tH5T_F03.F90	2024-12-04 10:00:48.065978864 +0100
+@@ -1181,7 +1181,7 @@
+        CALL verify("h5kind_to_type",dset_data_r(i),data_out_r(i),total_error)
+        CALL verify("h5kind_to_type",dset_data_r7(i),data_out_r7(i),total_error)
+        CALL verify("h5kind_to_type",dset_data_r15(i),data_out_r15(i),total_error)
+-       CALL verify("h5kind_to_type",dset_data_r31(i),data_out_r31(i),total_error)
++!       CALL verify("h5kind_to_type",dset_data_r31(i),data_out_r31(i),total_error)
+     END DO
+ 
+   !

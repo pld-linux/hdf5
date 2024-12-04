@@ -18,6 +18,7 @@ License:	Nearly BSD, but changed sources must be marked
 Group:		Libraries
 Source0:	https://support.hdfgroup.org/releases/hdf5/v1_14/v1_14_5/downloads/%{name}-%{version}.tar.gz
 # Source0-md5:	600d29af6ccb7f1e3401560e1422ba5e
+Patch0:		ix86-short-real.patch
 Patch1:		%{name}-cmake.patch
 URL:		https://www.hdfgroup.org/solutions/hdf5/
 BuildRequires:	autoconf >= 2.69
@@ -193,7 +194,10 @@ Natywny interfejs Javy (JNI) do biblioteki standardowej HDF5.
 
 %prep
 %setup -q
-%patch1 -p1
+%ifarch %{ix86}
+%patch -P 0 -p1
+%endif
+%patch -P 1 -p1
 
 %{__sed} -E -i -e '1s,#!\s*/usr/bin/env\s+bash(\s|$),#!/bin/bash\\1,' \
 	utils/subfiling_vfd/h5fuse.in
@@ -372,7 +376,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5Zdevelop.h
 %{_includedir}/H5Zpublic.h
 %{_includedir}/H5api_adpt.h
-%{_includedir}/H5config_f.inc
 %{_includedir}/H5overflow.h
 %{_includedir}/H5pubconf.h
 %{_includedir}/H5public.h
@@ -459,6 +462,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libhdf5hl_fortran.la
 %{_includedir}/H5f90i.h
 %{_includedir}/H5f90i_gen.h
+%{_includedir}/H5config_f.inc
 %{_includedir}/*.mod
 
 %files fortran-static

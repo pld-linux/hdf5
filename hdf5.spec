@@ -21,7 +21,7 @@ Source0:	https://support.hdfgroup.org/releases/hdf5/v1_14/v1_14_5/downloads/%{na
 Patch0:		ix86-short-real.patch
 Patch1:		%{name}-cmake.patch
 URL:		https://www.hdfgroup.org/solutions/hdf5/
-BuildRequires:	autoconf >= 2.69
+BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1:1.11
 %{?with_s3:BuildRequires:	curl-devel}
 BuildRequires:	gcc-fortran >= 6:4.2
@@ -301,7 +301,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING README.md release_docs/{HISTORY*.txt,RELEASE.txt}
+%doc ACKNOWLEDGMENTS COPYING COPYING_LBNL_HDF5 README.md SECURITY.md release_docs/{HISTORY*.txt,RELEASE.txt}
 %attr(755,root,root) %{_libdir}/libhdf5.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libhdf5.so.310
 %attr(755,root,root) %{_libdir}/libhdf5_hl.so.*.*.*
@@ -463,7 +463,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/H5f90i.h
 %{_includedir}/H5f90i_gen.h
 %{_includedir}/H5config_f.inc
-%{_includedir}/*.mod
+%{_includedir}/h5*.mod
+%{_includedir}/hdf5.mod
 
 %files fortran-static
 %defattr(644,root,root,755)

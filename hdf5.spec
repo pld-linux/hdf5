@@ -26,13 +26,14 @@ BuildRequires:	automake >= 1:1.11
 %{?with_s3:BuildRequires:	curl-devel}
 BuildRequires:	gcc-fortran >= 6:4.2
 %{?with_java:BuildRequires:	jdk}
+%{?with_szip:BuildRequires:	libaec-szip-devel >= 1.0}
 BuildRequires:	libjpeg-devel >= 6b
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
 %{?with_mpi:BuildRequires:	mpi-devel}
 %{?with_s3:BuildRequires:	openssl-devel}
-%{?with_szip:BuildRequires:	szip-devel >= 2.0}
 BuildRequires:	zlib-devel >= 1.1.3
+%{?with_szip:Requires:	libaec-szip >= 1.0}
 Obsoletes:	hdf5_hl < 5180
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -56,8 +57,8 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki HDF5
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %{?with_s3:Requires:	curl-devel}
+%{?with_szip:Requires:	libaec-szip-devel >= 1.0}
 %{?with_s3:Requires:	openssl-devel}
-%{?with_szip:Requires:	szip-devel >= 2.0}
 Requires:	zlib-devel
 Obsoletes:	hdf5_hl-devel < 5180
 Obsoletes:	hdf5_hl-tutor < 5180
